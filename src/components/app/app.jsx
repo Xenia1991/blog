@@ -1,6 +1,6 @@
 import NavigationPanel from '../navigation-panel';
 import ArticlesList from '../articles-list';
-import Pagination from '../pagination';
+import Paginations from '../pagination';
 
 import classes from './app.module.scss';
 
@@ -9,7 +9,7 @@ const App = () => {
     <div className={classes.app}>
       <NavigationPanel />
       <ArticlesList />
-      <Pagination />
+      <Paginations />
     </div>
   );
 };
