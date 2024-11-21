@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import classes from './navigation-panel.module.scss';
 
 const NavigationPanel = () => {
-  console.log(classes);
   const mainButtonClasses = classNames(classes.navigation__button, classes['navigation__button-main']);
   const signInButton = classNames(classes.navigation__button, classes['navigation__button-sign-in']);
   const signUpButton = classNames(classes.navigation__button, classes['navigation__button-sign-up']);
