@@ -1,0 +1,30 @@
+.navigation {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 22px;
+    background-color: #FFFFFF;
+    &__section {
+        display: flex;
+        column-gap: 18px;
+    }
+    &__button {
+        border: none;
+        background-color: inherit;
+        font-family: 'Inter';
+        font-size: 18px;
+        cursor: pointer;
+        &-sign-in {
+            width: 108px;
+            height: 50px;
+        }
+        &-sign-up {
+            width: 108px;
+            height: 50px;
+            color: #52C41A;
+            border: 0.4px solid #52C41A;
+            border-radius: 5px;
+        }
+    }
+}

@@ -6,7 +6,7 @@ import classes from './app.module.scss';
 
 const App = () => {
   return (
-    <div>
+    <div className={classes.app}>
       <NavigationPanel />
       <ArticlesList />
       <Pagination />
