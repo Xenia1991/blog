@@ -1,8 +1,18 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Pagination, ConfigProvider } from 'antd';
+
+import { fetchArticlesThunk } from '../../redux/article-reducer';
 
 import classes from './pagination.module.scss';
 
 const Paginations = () => {
+  const pageTotal = useSelector((state) => state.articles.articlesCount);
+  const dispatch = useDispatch();
+
+  const handlePageChange = (page) => {
+    dispatch(fetchArticlesThunk((page - 1) * 5));
+  };
+
   return (
     <div className={classes.pagination}>
       <ConfigProvider
@@ -15,7 +25,13 @@ const Paginations = () => {
           },
         }}
       >
-        <Pagination defaultCurrent={1} total={25} defaultPageSize={5} />
+        <Pagination
+          defaultCurrent={1}
+          total={pageTotal}
+          defaultPageSize={5}
+          onChange={handlePageChange}
+          showSizeChanger={false}
+        />
       </ConfigProvider>
     </div>
   );

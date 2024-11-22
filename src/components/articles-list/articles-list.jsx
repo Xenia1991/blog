@@ -1,17 +1,25 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { nanoid } from 'nanoid';
+
 import ArticlePreview from '../article-preview/article-preview';
+import { fetchArticlesThunk } from '../../redux/article-reducer';
 
 import classes from './articles-list.module.scss';
 
 const ArticlesList = () => {
-  return (
-    <ul className={classes['articles-list']}>
-      <ArticlePreview />
-      <ArticlePreview />
-      <ArticlePreview />
-      <ArticlePreview />
-      <ArticlePreview />
-    </ul>
-  );
+  const articles = useSelector((state) => state.articles.articles);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchArticlesThunk(0));
+  }, [dispatch]);
+
+  const articlesList = articles.map((article) => {
+    return <ArticlePreview article={article} key={nanoid()} />;
+  });
+
+  return <ul className={classes['articles-list']}>{articlesList}</ul>;
 };
 
 export default ArticlesList;
