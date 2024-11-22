@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 
 import ArticlePreview from '../article-preview/article-preview';
+import Paginations from '../pagination';
 import { fetchArticlesThunk } from '../../redux/article-reducer';
 
 import classes from './articles-list.module.scss';
@@ -19,7 +20,12 @@ const ArticlesList = () => {
     return <ArticlePreview article={article} key={nanoid()} />;
   });
 
-  return <ul className={classes['articles-list']}>{articlesList}</ul>;
+  return (
+    <section className={classes['articles-section']}>
+      <ul className={classes['articles-list']}>{articlesList}</ul>
+      <Paginations />
+    </section>
+  );
 };
 
 export default ArticlesList;

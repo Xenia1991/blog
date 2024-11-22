@@ -31,6 +31,7 @@ const Paginations = () => {
           defaultPageSize={5}
           onChange={handlePageChange}
           showSizeChanger={false}
+          align="center"
         />
       </ConfigProvider>
     </div>

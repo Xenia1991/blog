@@ -1,9 +1,10 @@
 import { Provider } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 import store from '../../redux/store';
 import NavigationPanel from '../navigation-panel';
 import ArticlesList from '../articles-list';
-import Paginations from '../pagination';
+import Article from '../article';
 
 import classes from './app.module.scss';
 
@@ -12,8 +13,10 @@ const App = () => {
     <div className={classes.app}>
       <Provider store={store}>
         <NavigationPanel />
-        <ArticlesList />
-        <Paginations />
+        <Routes>
+          <Route path="/articles" element={<ArticlesList />} />
+          <Route path="/article" element={<Article />} />
+        </Routes>
       </Provider>
     </div>
   );
