@@ -1,34 +1,35 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
+
+import { fetchArticleThunk } from '../../redux/article-reducer';
 
 import classes from './article.module.scss';
 import avatar from './avatar.png';
 
 const Article = () => {
-  const article = {
-    slug: 'luchshie-citaty-dzhonni-silverhenda-sq8xjx',
-    title: 'Лучшие Цитаты Джонни Сильверхенда',
-    description: 'В этом посте собрал лучшие цитаты Джонни Сильверхенда',
-    body: '1. - Единственная разница между хорошим и плохим днём - это твоё отношение к нему.\n\n2. - Если тебе',
-    createdAt: '2024-11-17T17:48:21.930Z',
-    updatedAt: '2024-11-21T21:38:00.619Z',
-    tagList: ['cyberpunk 2077', 'Silverhand'],
-    favorited: false,
-    favoritesCount: 4,
-    author: {
-      username: 'silverhand',
-      image: 'https://i.pinimg.com/736x/20/ce/76/20ce76a25921ffa092d6fd6e57fa33f5.jpg',
-      following: false,
-    },
-  };
+  const article = useSelector((state) => state.articles.article);
+  const isLoading = useSelector((state) => state.articles.isLoading);
+
+  if (!article || isLoading) {
+    return <div>Загружаем...</div>;
+  }
+
   const { Text } = Typography;
-  const tags = article.tagList.map((tag) => (
-    <Text code key={nanoid()}>
-      {tag}
-    </Text>
-  ));
+  let tags;
+  if (article.tagList) {
+    tags = article.tagList.map((tag) => (
+      <Text code key={nanoid()}>
+        {tag}
+      </Text>
+    ));
+  } else {
+    tags = [];
+  }
   const creationDate = format(new Date(article.createdAt), 'MMMM dd, yyyy');
+
   return (
     <section className={classes['article-section']}>
       <div className={classes['article']}>

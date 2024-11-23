@@ -2,11 +2,17 @@ import { Typography } from 'antd';
 import { nanoid } from 'nanoid';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { fetchArticleThunk } from '../../redux/article-reducer';
 
 import classes from './article-preview.module.scss';
 import avatar from './avatar.png';
 
 const ArticlePreview = ({ article }) => {
+  const { slug } = article;
+  const dispatch = useDispatch();
+
   const cutTitle = (title) => {
     if (title.length > 40) {
       const cuttedTitle = `${title.split('').slice(0, 40).join('')}...`;
@@ -23,24 +29,33 @@ const ArticlePreview = ({ article }) => {
     return description;
   };
 
+  const handleClick = () => {
+    dispatch(fetchArticleThunk(slug));
+  };
+
   const { Text } = Typography;
 
-  const tags = article.tagList.map((tag) => (
-    <Text code key={nanoid()}>
-      {tag}
-    </Text>
-  ));
+  let tags;
+  if (article.tagList) {
+    tags = article.tagList.map((tag) => (
+      <Text code key={nanoid()}>
+        {tag}
+      </Text>
+    ));
+  } else {
+    tags = [];
+  }
+
   const creationDate = format(new Date(article.createdAt), 'MMMM dd, yyyy');
   const { image, username } = article.author;
   const title = cutTitle(article.title);
   const description = cuttedDescription(article.description);
-  console.log(article);
 
   return (
     <li className={classes['article-preview']}>
       <section className={classes['article-preview__text-section']}>
         <div className={classes['article-preview__header']}>
-          <Link to={`/articles/${article.slug}`} className={classes['article-preview__title']}>
+          <Link to={`/articles/${slug}`} className={classes['article-preview__title']} onClick={handleClick}>
             {title}
           </Link>
           <button type="submit" className={classes['article-preview__likes-section']}>
