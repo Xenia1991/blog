@@ -6,7 +6,7 @@ import classes from './loader.module.scss';
 const Loader = () => {
   return (
     <div className={classes['loader-container']}>
-      <Spin indicator={<LoadingOutlined spin />} size="large" />
+      <Spin indicator={<LoadingOutlined spin />} style={{ fontSize: 80 }} size="large" />
     </div>
   );
 };

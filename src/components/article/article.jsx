@@ -4,6 +4,7 @@ import { Typography } from 'antd';
 import { format } from 'date-fns';
 
 import Loader from '../loader';
+import Error from '../error/error';
 
 import classes from './article.module.scss';
 import avatar from './avatar.png';
@@ -11,9 +12,14 @@ import avatar from './avatar.png';
 const Article = () => {
   const article = useSelector((state) => state.articles.article);
   const isLoading = useSelector((state) => state.articles.isLoading);
+  const isError = useSelector((state) => state.articles.isError);
 
   if (!article || isLoading) {
     return <Loader />;
+  }
+
+  if (isError) {
+    return <Error />;
   }
 
   const { Text } = Typography;

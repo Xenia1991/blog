@@ -18,7 +18,7 @@ export const articlesReducerSlice = createSlice({
     article: null,
     isLoading: false,
     articlesCount: null,
-    error: null,
+    isError: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -31,21 +31,23 @@ export const articlesReducerSlice = createSlice({
         state.articles = action.payload.articles;
         state.articlesCount = action.payload.articlesCount;
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(fetchArticlesThunk.rejected, (state) => {
         state.isLoading = false;
-        state.error = 'articles response error';
+        state.isError = true;
       })
       .addCase(fetchArticleThunk.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchArticleThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isError = false;
         state.article = action.payload.article;
       })
       .addCase(fetchArticleThunk.rejected, (state) => {
         state.isLoading = false;
-        state.error = 'article response error';
+        state.isError = true;
       });
   },
 });

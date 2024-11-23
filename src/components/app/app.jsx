@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import NavigationPanel from '../navigation-panel';
