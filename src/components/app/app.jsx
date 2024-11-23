@@ -15,7 +15,13 @@ const App = () => {
         <NavigationPanel />
         <Routes>
           <Route path="/articles" element={<ArticlesList />} />
-          <Route path="/article" element={<Article />} />
+          <Route
+            path="/article/:slug"
+            render={({ match }) => {
+              const { slug } = match;
+              return <Article slug={slug} />;
+            }}
+          />
         </Routes>
       </Provider>
     </div>

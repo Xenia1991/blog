@@ -1,6 +1,7 @@
 import { Typography } from 'antd';
 import { nanoid } from 'nanoid';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 import classes from './article-preview.module.scss';
 import avatar from './avatar.png';
@@ -33,12 +34,15 @@ const ArticlePreview = ({ article }) => {
   const { image, username } = article.author;
   const title = cutTitle(article.title);
   const description = cuttedDescription(article.description);
+  console.log(article);
 
   return (
     <li className={classes['article-preview']}>
       <section className={classes['article-preview__text-section']}>
         <div className={classes['article-preview__header']}>
-          <h5 className={classes['article-preview__title']}>{title}</h5>
+          <Link to={`/articles/${article.slug}`} className={classes['article-preview__title']}>
+            {title}
+          </Link>
           <button type="submit" className={classes['article-preview__likes-section']}>
             <span className={classes['article-preview__like']} />
             <span className={classes['article-preview__count']}>{article.favoritesCount}</span>

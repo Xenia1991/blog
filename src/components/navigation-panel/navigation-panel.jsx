@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import classes from './navigation-panel.module.scss';
@@ -8,9 +9,9 @@ const NavigationPanel = () => {
   const signUpButton = classNames(classes.navigation__button, classes['navigation__button-sign-up']);
   return (
     <section className={classes.navigation}>
-      <button type="submit" className={mainButtonClasses}>
+      <Link to="/articles" className={mainButtonClasses}>
         Realworld Blog
-      </button>
+      </Link>
       <div className={classes.navigation__section}>
         <button type="submit" className={signInButton}>
           Sign In
