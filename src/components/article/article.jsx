@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
 
-import { fetchArticleThunk } from '../../redux/article-reducer';
+import Loader from '../loader';
 
 import classes from './article.module.scss';
 import avatar from './avatar.png';
@@ -14,7 +13,7 @@ const Article = () => {
   const isLoading = useSelector((state) => state.articles.isLoading);
 
   if (!article || isLoading) {
-    return <div>Загружаем...</div>;
+    return <Loader />;
   }
 
   const { Text } = Typography;
