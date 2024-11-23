@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
+import Markdown from 'markdown-to-jsx';
 
 import Loader from '../loader';
 import Error from '../error/error';
@@ -57,7 +58,9 @@ const Article = () => {
           <img src={article.author.image || avatar} alt="Author avatar" className={classes['article__author-avatar']} />
         </section>
       </div>
-      <div className={classes['article-body']}>{article.body}</div>
+      <div className={classes['article-body']}>
+        <Markdown>{article.body}</Markdown>
+      </div>
     </section>
   );
 };
