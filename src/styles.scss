@@ -6,7 +6,15 @@
     font-style: normal;
 }
 
-body, h5, ul, li {
+body, h5, h2, h1, h3, ul, li, p {
     margin: 0;
     padding: 0;
+}
+
+button {
+    border: none;
+}
+
+a {
+    text-decoration: none;
 }
