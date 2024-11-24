@@ -23,9 +23,9 @@ const NavigationPanel = () => {
         Realworld Blog
       </Link>
       <div className={classes.navigation__section}>
-        <button type="submit" className={signInButton}>
+        <Link to="/sign-in" className={signInButton}>
           Sign In
-        </button>
+        </Link>
         <button type="submit" className={signUpButton}>
           Sign Up
         </button>

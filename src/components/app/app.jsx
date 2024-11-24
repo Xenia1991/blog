@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import NavigationPanel from '../navigation-panel';
 import ArticlesList from '../articles-list';
 import Article from '../article';
+import SignInForm from '../sign-in-form';
 
 import classes from './app.module.scss';
 
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<ArticlesList />} />
         <Route path="/articles" element={<ArticlesList />} />
         <Route path="/articles/:slug" element={<Article />} />
+        <Route path="/sign-in" element={<SignInForm />} />
       </Routes>
     </div>
   );
