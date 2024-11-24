@@ -1,16 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination, ConfigProvider } from 'antd';
 
-import { fetchArticlesThunk } from '../../redux/article-reducer';
+import { fetchArticlesThunk, articlesReducerSlice } from '../../redux/article-reducer';
 
 import classes from './pagination.module.scss';
 
 const Paginations = () => {
   const pageTotal = useSelector((state) => state.articles.articlesCount);
+  const currentPage = useSelector((state) => state.articles.page);
   const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
+    dispatch(articlesReducerSlice.actions.changePage(page));
     dispatch(fetchArticlesThunk((page - 1) * 5));
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -26,7 +29,7 @@ const Paginations = () => {
         }}
       >
         <Pagination
-          defaultCurrent={1}
+          current={currentPage}
           total={pageTotal}
           defaultPageSize={5}
           onChange={handlePageChange}

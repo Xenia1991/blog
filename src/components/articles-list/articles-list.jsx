@@ -14,13 +14,18 @@ const ArticlesList = () => {
   const articles = useSelector((state) => state.articles.articles);
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
+  const page = useSelector((state) => state.articles.page);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchArticlesThunk(0));
-  }, [dispatch]);
+    if (page === 0) {
+      dispatch(fetchArticlesThunk(0));
+    } else {
+      dispatch(fetchArticlesThunk((page - 1) * 5));
+    }
+  }, [dispatch, page]);
 
-  if (!articles && isLoading) {
+  if (!articles || isLoading) {
     return <Loader />;
   }
 

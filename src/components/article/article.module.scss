@@ -1,11 +1,10 @@
 .article-section {
     width: 940px;
-    height: 807px;
+    min-height: 100%;
     background-color: #FFFFFF;
     margin: 26px auto 64px auto;
     box-sizing: border-box;
     padding: 10px 5px;
-    overflow-y: scroll;
 }
 .article {
     width: 100%;
@@ -100,7 +99,7 @@
 }
 .article-body {
     width: 100%;
-    height: auto;
+    // height: auto;
     box-sizing: border-box;
     padding: 0 14px;
     font-family: 'Inter';

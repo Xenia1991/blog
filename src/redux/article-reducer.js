@@ -19,8 +19,13 @@ export const articlesReducerSlice = createSlice({
     isLoading: false,
     articlesCount: null,
     isError: false,
+    page: 0,
   },
-  reducers: {},
+  reducers: {
+    changePage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticlesThunk.pending, (state) => {
