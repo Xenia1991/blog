@@ -6,9 +6,9 @@ import Markdown from 'markdown-to-jsx';
 
 import Loader from '../loader';
 import Error from '../error/error';
+import avatar from '../../assets/images/avatar.png';
 
 import classes from './article.module.scss';
-import avatar from './avatar.png';
 
 const Article = () => {
   const article = useSelector((state) => state.articles.article);

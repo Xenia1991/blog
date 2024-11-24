@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { fetchArticleThunk } from '../../redux/article-reducer';
+import avatar from '../../assets/images/avatar.png';
 
 import classes from './article-preview.module.scss';
-import avatar from './avatar.png';
 
 const ArticlePreview = ({ article }) => {
   const { slug } = article;
