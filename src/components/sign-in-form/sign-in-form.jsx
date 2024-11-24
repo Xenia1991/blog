@@ -20,7 +20,7 @@ const SignInForm = () => {
         </button>
         <p className={classes['sign-in-form__notification']}>
           Don&apos;t have an account?{' '}
-          <Link to="/sing-up" className={classes['sign-in-form__link']}>
+          <Link to="/sign-up" className={classes['sign-in-form__link']}>
             Sign Up.
           </Link>
         </p>
