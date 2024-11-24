@@ -26,9 +26,9 @@ const NavigationPanel = () => {
         <Link to="/sign-in" className={signInButton}>
           Sign In
         </Link>
-        <button type="submit" className={signUpButton}>
+        <Link to="/sign-up" className={signUpButton}>
           Sign Up
-        </button>
+        </Link>
       </div>
     </section>
   );
