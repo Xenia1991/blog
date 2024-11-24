@@ -19,7 +19,7 @@ const SignInForm = () => {
           Login
         </button>
         <p className={classes['sign-in-form__notification']}>
-          Don&apos;t have an account?
+          Don&apos;t have an account?{' '}
           <Link to="/sing-up" className={classes['sign-in-form__link']}>
             Sign Up.
           </Link>
