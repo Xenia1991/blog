@@ -12,7 +12,6 @@ const NavigationPanel = () => {
   const mainButtonClasses = classNames(classes.navigation__button, classes['navigation__button-main']);
   const signInButton = classNames(classes.navigation__button, classes['navigation__button-sign-in']);
   const signUpButton = classNames(classes.navigation__button, classes['navigation__button-sign-up']);
-  console.log(page);
 
   const handleClick = () => {
     dispatch(fetchArticlesThunk((page - 1) * 5));
