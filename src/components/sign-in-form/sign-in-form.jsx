@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import classes from './sign-in-form.module.scss';
+import { schema } from './shema';
 
 const SignInForm = () => {
   const {
@@ -10,7 +12,10 @@ const SignInForm = () => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onBlur',
+  });
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
@@ -24,19 +29,26 @@ const SignInForm = () => {
         <label className={classes['sign-in-form__email-label']}>
           <p className={classes['sign-in-form__text']}>Email address</p>
           <input
-            {...register('email', {
-              required: 'Обязательное поле',
-              minLength: { value: 5, message: 'Минимум 5 символов' },
-            })}
+            {...register('email')}
             type="email"
             className={classes['sign-in-form__input']}
             placeholder="Email address"
           />
-          <div style={{ height: '20px' }}>{errors?.email && <p>{errors?.email?.message || 'Error!'}</p>}</div>
+          <div className={classes['sign-in-form__validation-error']}>
+            {errors?.email ? errors?.email?.message : null}
+          </div>
         </label>
         <label className={classes['sign-in-form__password-label']}>
           <p className={classes['sign-in-form__text']}>Password</p>
-          <input type="password" className={classes['sign-in-form__input']} placeholder="Password" />
+          <input
+            {...register('password')}
+            type="password"
+            className={classes['sign-in-form__input']}
+            placeholder="Password"
+          />
+          <div className={classes['sign-in-form__validation-error']}>
+            {errors?.password ? errors?.password?.message : null}
+          </div>
         </label>
         <button type="submit" className={classes['sign-in-form__button']} disabled={!isValid}>
           Login

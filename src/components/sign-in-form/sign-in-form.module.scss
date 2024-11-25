@@ -68,4 +68,11 @@
     &__link {
         color: #1890FF;
     }
+    &__validation-error {
+        height: '20px';
+        color: red;
+        font-size: 14px;
+        padding-left: 2px;
+        padding-top: 2px;
+    }
 }
