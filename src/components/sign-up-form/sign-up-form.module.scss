@@ -68,6 +68,15 @@
         &::placeholder {  
             color: #BFBFBF;
         }
+        &--error {
+            height: 40px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            padding: 8px 12px;
+            margin-top: 2px;
+            border: 1px solid red;
+            font-size: 16px;
+        }
     }
     &__text {
         font-size: 14px;
@@ -79,12 +88,22 @@
         box-sizing: border-box;
         border-top: 1px solid #D9D9D9;
         padding: 4px;
+        display: flex;
+        align-items: flex-start;
+        &-input {
+            margin-bottom: 10px;
+            padding-top: 0;
+            margin-right: 5px;
+        }
+    }
+    &__validation-error {
+        height: '20px';
+        color: red;
+        font-size: 14px;
+        padding-left: 2px;
+        padding-top: 2px;
     }
     :global(.ant-checkbox-wrapper) {
         font-family: 'Roboto';
-    }
-    :global(.ant-checkbox) {
-        align-self:flex-start;
-        margin-top: 3px;
     }
 }

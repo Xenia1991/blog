@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,7 +30,7 @@ const SignInForm = () => {
           <input
             {...register('email')}
             type="email"
-            className={classes['sign-in-form__input']}
+            className={errors?.email ? classes['sign-in-form__input--error'] : classes['sign-in-form__input']}
             placeholder="Email address"
           />
           <div className={classes['sign-in-form__validation-error']}>
@@ -43,7 +42,7 @@ const SignInForm = () => {
           <input
             {...register('password')}
             type="password"
-            className={classes['sign-in-form__input']}
+            className={errors?.password ? classes['sign-in-form__input--error'] : classes['sign-in-form__input']}
             placeholder="Password"
           />
           <div className={classes['sign-in-form__validation-error']}>
