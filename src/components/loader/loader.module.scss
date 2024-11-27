@@ -1,6 +1,6 @@
 .loader-container {
     width: 1440px;
-    height: 908px;
+    height: calc(100vh - 82px);
     display: flex;
     justify-content: center;
     align-items: center;

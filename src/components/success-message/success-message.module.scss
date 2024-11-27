@@ -1,0 +1,16 @@
+.success-container {
+    width: 1440px;
+    height: calc(100vh - 82px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__header {
+        font-family: 'Roboto';
+        margin: 15px;
+    }
+    &__link {
+        text-decoration: none;
+        color: #1890FF;
+    }
+}

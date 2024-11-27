@@ -1,11 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Loader from '../loader';
+import { createAccountThunk } from '../../redux/account-reducer';
+import SuccessMessage from '../success-message/success-message';
 
 import classes from './sign-up-form.module.scss';
 import { schema } from './schema';
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
+  const creationError = useSelector((state) => state.account.isCreatingError);
+  const loader = useSelector((state) => state.account.isCreatingLoader);
+  const user = useSelector((state) => state.account.user);
+
   const {
     register,
     formState: { errors, isValid },
@@ -16,14 +26,18 @@ const SignUpForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = () => {
-    console.log('u changed forms');
+  const onSubmit = (evt) => {
+    dispatch(createAccountThunk(evt));
     reset();
   };
 
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
+  if (loader) {
+    return <Loader />;
+  }
+
+  if (user) {
+    return <SuccessMessage />;
+  }
 
   return (
     <section className={classes['sign-up-container']}>
@@ -34,7 +48,7 @@ const SignUpForm = () => {
           <input
             {...register('username')}
             type="text"
-            placeholder="username"
+            placeholder="Username"
             className={errors?.username ? classes['sign-up-form__input--error'] : classes['sign-up-form__input']}
           />
           <div className={classes['sign-up-form__validation-error']}>{errors?.username?.message}</div>
@@ -70,17 +84,18 @@ const SignUpForm = () => {
           <div className={classes['sign-up-form__validation-error']}>{errors?.repeatPassword?.message}</div>
         </label>
         <div className={classes['sign-up-form__agreement']}>
-          <input
-            type="checkbox"
-            {...register('tandc')}
-            className={errors?.tandc ? classes['sign-up-form__input--error'] : classes['sign-up-form__input']}
-          />
+          <input type="checkbox" {...register('tandc')} className={classes['sign-up-form__agreement-input']} />
           <span>I agree to the processing of my personal information</span>
         </div>
         <div className={classes['sign-up-form__validation-error']}>{errors?.tandc?.message}</div>
         <button type="submit" className={classes['sign-up-form__button']} disabled={!isValid}>
           Create
         </button>
+        {creationError ? (
+          <div className={classes['sign-up-form__validation-error']}>
+            Username or email is already taken, try another
+          </div>
+        ) : null}
         <p className={classes['sign-up-form__notification']}>
           Already have an account?{' '}
           <Link to="/sign-in" className={classes['sign-up-form__link']}>
