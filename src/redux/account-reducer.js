@@ -24,7 +24,7 @@ export const accountReducerSlice = createSlice({
         state.isCreatingLoader = false;
         state.isCreatingError = false;
         state.token = action.payload.token;
-        state.user = action.payload;
+        state.user = action.payload.user;
       })
       .addCase(createAccountThunk.rejected, (state, action) => {
         state.isCreatingError = true;

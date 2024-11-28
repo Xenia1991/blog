@@ -8,6 +8,7 @@
     &__section {
         display: flex;
         column-gap: 18px;
+        align-items: center;
     }
     &__button {
         border: none;
@@ -34,6 +35,38 @@
             border: 0.4px solid #52C41A;
             border-radius: 5px;
             padding-top: 0;
+            text-align: center;
+            padding-top: 12px;
+            box-sizing: border-box;
+        }
+        &-create-article {
+            width: 112px;
+            height: 32px;
+            font-size: 14px;
+            color: #52C41A;
+            border: 0.4px solid #52C41A;
+            border-radius: 5px;
+            padding-top: 6px;
+            box-sizing: border-box;
+        }
+        &-profile {
+            width: 140px;
+            height: 46px;
+            text-align: left;
+            padding-top: 15px;
+            box-sizing: border-box;
+            font-family: 'Inter';
+            background-image: url('../../assets/images/avatar.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: 95% 50%;
+        }
+        &-log-out {
+            width: 108px;
+            height: 50px;
+            color: rgba(#000000, 0.75);
+            border: 0.4px solid rgba(#000000, 0.75);
+            border-radius: 5px;
             text-align: center;
             padding-top: 12px;
             box-sizing: border-box;
