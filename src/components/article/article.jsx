@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
 import Markdown from 'markdown-to-jsx';
+import { useParams } from 'react-router-dom';
 
+import { fetchArticleThunk, fetchArticlesThunk } from '../../redux/article-reducer';
 import Loader from '../loader';
 import Error from '../error/error';
 import avatar from '../../assets/images/avatar.png';
@@ -14,6 +17,13 @@ const Article = () => {
   const article = useSelector((state) => state.articles.article);
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
+  const dispatch = useDispatch();
+  const { slug } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchArticlesThunk());
+    dispatch(fetchArticleThunk(slug));
+  }, []);
 
   if (!article || isLoading) {
     return <Loader />;
