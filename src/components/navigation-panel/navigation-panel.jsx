@@ -37,9 +37,9 @@ const NavigationPanel = () => {
           <a href="/" className={createArticle}>
             Create article
           </a>
-          <a href="/" className={profile}>
+          <Link to="/profile" className={profile}>
             {user?.username || 'user'}
-          </a>
+          </Link>
           <a href="/" className={logOutButton} onClick={handleLogoutClick}>
             Log Out
           </a>
