@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import Loader from '../loader';
 import { createAccountThunk } from '../../redux/account-reducer';
@@ -14,7 +15,7 @@ const SignUpForm = () => {
   const creationError = useSelector((state) => state.account.isCreatingError);
   const loader = useSelector((state) => state.account.isCreatingLoader);
   const user = useSelector((state) => state.account.user);
-  const navigate = useNavigate();
+  const navigation = useNavigate();
 
   const {
     register,
@@ -31,12 +32,14 @@ const SignUpForm = () => {
     reset();
   };
 
+  useEffect(() => {
+    if (user) {
+      navigation('/');
+    }
+  }, [user, navigation]);
+
   if (loader) {
     return <Loader />;
-  }
-
-  if (user) {
-    navigate('/');
   }
 
   return (

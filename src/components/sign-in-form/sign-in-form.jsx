@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 
 import { enterAccountThunk } from '../../redux/account-reducer';
 import Loader from '../loader';
@@ -31,13 +32,16 @@ const SignInForm = () => {
     reset();
   };
 
+  useEffect(() => {
+    if (user) {
+      navigation('/');
+    }
+  }, [user, navigation]);
+
   if (enteringLoader) {
     return <Loader />;
   }
 
-  if (user) {
-    navigation('/');
-  }
   return (
     <section className={classes['sign-in-section']}>
       <form className={classes['sign-in-form']} method="get" onSubmit={handleSubmit(onSubmit)}>
