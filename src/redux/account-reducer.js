@@ -1,9 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { createAccount } from '../services/account-service';
+import { createAccount, enterAccount } from '../services/account-service';
 
 export const createAccountThunk = createAsyncThunk('account/createAccountFetch', async (user, { rejectWithValue }) => {
   return createAccount(user, rejectWithValue);
+});
+
+export const enterAccountThunk = createAsyncThunk('account/enterAccountFetch', async (user, { rejectWithValue }) => {
+  return enterAccount(user, rejectWithValue);
 });
 
 export const accountReducerSlice = createSlice({
@@ -13,6 +17,8 @@ export const accountReducerSlice = createSlice({
     user: null,
     isCreatingError: false,
     isCreatingLoader: false,
+    isEnteringError: false,
+    isEnteringLoader: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -29,6 +35,19 @@ export const accountReducerSlice = createSlice({
       .addCase(createAccountThunk.rejected, (state, action) => {
         state.isCreatingError = true;
         state.isCreatingLoader = false;
+      })
+      .addCase(enterAccountThunk.pending, (state, action) => {
+        state.isEnteringLoader = true;
+      })
+      .addCase(enterAccountThunk.fulfilled, (state, action) => {
+        state.isEnteringLoader = false;
+        state.isEnteringError = false;
+        state.token = action.payload.user.token;
+        state.user = action.payload.user;
+      })
+      .addCase(enterAccountThunk.rejected, (state, action) => {
+        state.isEnteringError = true;
+        state.isEnteringLoader = false;
       });
   },
 });

@@ -1,11 +1,21 @@
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { enterAccountThunk } from '../../redux/account-reducer';
+import Loader from '../loader';
+import SuccessMessage from '../success-message/success-message';
 
 import classes from './sign-in-form.module.scss';
 import { schema } from './shema';
 
 const SignInForm = () => {
+  const enteringError = useSelector((state) => state.account.isEnteringError);
+  const enteringLoader = useSelector((state) => state.account.isEnteringLoader);
+  const user = useSelector((state) => state.account.user);
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors, isValid },
@@ -16,11 +26,18 @@ const SignInForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+  const onSubmit = (evt) => {
+    dispatch(enterAccountThunk(evt));
     reset();
   };
 
+  if (enteringLoader) {
+    return <Loader />;
+  }
+
+  if (user) {
+    return <SuccessMessage />;
+  }
   return (
     <section className={classes['sign-in-section']}>
       <form className={classes['sign-in-form']} method="get" onSubmit={handleSubmit(onSubmit)}>
@@ -52,6 +69,9 @@ const SignInForm = () => {
         <button type="submit" className={classes['sign-in-form__button']} disabled={!isValid}>
           Login
         </button>
+        {enteringError ? (
+          <div className={classes['sign-in-form__validation-error']}>Incorrect username or email</div>
+        ) : null}
         <p className={classes['sign-in-form__notification']}>
           Don&apos;t have an account?{' '}
           <Link to="/sign-up" className={classes['sign-in-form__link']}>
