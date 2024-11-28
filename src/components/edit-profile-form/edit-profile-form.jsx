@@ -1,10 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { editProfileThunk } from '../../redux/account-reducer';
 
 import classes from './edit-profile-form.module.scss';
 import { schema } from './schema';
 
 const EditProfileForm = () => {
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors, isValid },
@@ -16,7 +21,7 @@ const EditProfileForm = () => {
   });
 
   const onSubmit = (evt) => {
-    console.log(evt);
+    dispatch(editProfileThunk(evt));
     reset();
   };
 

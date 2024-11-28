@@ -33,3 +33,23 @@ export const enterAccount = async (userInfo, rejected) => {
     return rejected(error);
   }
 };
+
+export const editProfile = async (userInfo, rejected) => {
+  try {
+    const user = {
+      user: { email: userInfo.email, password: userInfo.password, username: userInfo.username, image: userInfo.image },
+    };
+    const editProfileRequest = await fetch('https://blog-platform.kata.academy/api/user', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: `Token ${userInfo.token}` },
+      body: JSON.stringify(user),
+    });
+    if (!editProfileRequest.ok) {
+      throw new Error('error in editProfileRequest');
+    }
+    const successEdition = editProfileRequest.json();
+    return successEdition;
+  } catch (error) {
+    return rejected(error);
+  }
+};

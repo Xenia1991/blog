@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { createAccount, enterAccount } from '../services/account-service';
+import { createAccount, enterAccount, editProfile } from '../services/account-service';
 
 export const createAccountThunk = createAsyncThunk('account/createAccountFetch', async (user, { rejectWithValue }) => {
   return createAccount(user, rejectWithValue);
@@ -8,6 +8,10 @@ export const createAccountThunk = createAsyncThunk('account/createAccountFetch',
 
 export const enterAccountThunk = createAsyncThunk('account/enterAccountFetch', async (user, { rejectWithValue }) => {
   return enterAccount(user, rejectWithValue);
+});
+
+export const editProfileThunk = createAsyncThunk('account/editAccountFetch', async (user, { rejectWithValue }) => {
+  return editProfile(user, rejectWithValue);
 });
 
 export const accountReducerSlice = createSlice({
@@ -19,6 +23,8 @@ export const accountReducerSlice = createSlice({
     isCreatingLoader: false,
     isEnteringError: false,
     isEnteringLoader: false,
+    isEditingLoader: false,
+    isEditingError: false,
   },
   reducers: {
     logOut(state, action) {
@@ -53,6 +59,19 @@ export const accountReducerSlice = createSlice({
       .addCase(enterAccountThunk.rejected, (state, action) => {
         state.isEnteringError = true;
         state.isEnteringLoader = false;
+      })
+      .addCase(editProfileThunk.pending, (state, action) => {
+        state.isEditingLoader = true;
+      })
+      .addCase(editProfileThunk.fulfilled, (state, action) => {
+        state.isEditingLoader = false;
+        state.isEditingError = false;
+        state.token = action.payload.user.token;
+        state.user = action.payload.user;
+      })
+      .addCase(editProfileThunk.rejected, (state, action) => {
+        state.isEditingError = true;
+        state.isEditingLoader = false;
       });
   },
 });
