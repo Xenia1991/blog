@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loader from '../loader';
 import { createAccountThunk } from '../../redux/account-reducer';
-import SuccessMessage from '../success-message/success-message';
 
 import classes from './sign-up-form.module.scss';
 import { schema } from './schema';
@@ -15,6 +14,7 @@ const SignUpForm = () => {
   const creationError = useSelector((state) => state.account.isCreatingError);
   const loader = useSelector((state) => state.account.isCreatingLoader);
   const user = useSelector((state) => state.account.user);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -36,7 +36,7 @@ const SignUpForm = () => {
   }
 
   if (user) {
-    return <SuccessMessage />;
+    navigate('/');
   }
 
   return (

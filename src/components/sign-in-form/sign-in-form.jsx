@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { enterAccountThunk } from '../../redux/account-reducer';
 import Loader from '../loader';
-import SuccessMessage from '../success-message/success-message';
 
 import classes from './sign-in-form.module.scss';
 import { schema } from './shema';
@@ -14,6 +13,7 @@ const SignInForm = () => {
   const enteringError = useSelector((state) => state.account.isEnteringError);
   const enteringLoader = useSelector((state) => state.account.isEnteringLoader);
   const user = useSelector((state) => state.account.user);
+  const navigation = useNavigate();
   const dispatch = useDispatch();
 
   const {
@@ -36,7 +36,7 @@ const SignInForm = () => {
   }
 
   if (user) {
-    return <SuccessMessage />;
+    navigation('/');
   }
   return (
     <section className={classes['sign-in-section']}>
