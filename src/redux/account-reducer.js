@@ -20,7 +20,12 @@ export const accountReducerSlice = createSlice({
     isEnteringError: false,
     isEnteringLoader: false,
   },
-  reducers: {},
+  reducers: {
+    logOut(state, action) {
+      state.user = null;
+      state.token = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createAccountThunk.pending, (state, action) => {

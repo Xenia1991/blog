@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { fetchArticlesThunk } from '../../redux/article-reducer';
+import { accountReducerSlice } from '../../redux/account-reducer';
 
 import classes from './navigation-panel.module.scss';
 
@@ -16,6 +17,11 @@ const NavigationPanel = () => {
   const createArticle = classNames(classes.navigation__button, classes['navigation__button-create-article']);
   const profile = classNames(classes.navigation__button, classes['navigation__button-profile']);
   const logOutButton = classNames(classes.navigation__button, classes['navigation__button-log-out']);
+
+  const handleLogoutClick = () => {
+    dispatch(accountReducerSlice.actions.logOut());
+  };
+
   const handleClick = () => {
     dispatch(fetchArticlesThunk((page - 1) * 5));
   };
@@ -34,7 +40,7 @@ const NavigationPanel = () => {
           <a href="/" className={profile}>
             {user?.username || 'user'}
           </a>
-          <a href="/" className={logOutButton}>
+          <a href="/" className={logOutButton} onClick={handleLogoutClick}>
             Log Out
           </a>
         </div>
