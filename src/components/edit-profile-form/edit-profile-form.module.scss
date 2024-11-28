@@ -64,5 +64,13 @@
         background-color: #1890FF;
         color: #FFFFFF;
         font-size: 16px;
+        cursor: pointer;
+    }
+    &__validation-error {
+        height: '20px';
+        color: red;
+        font-size: 14px;
+        padding-left: 2px;
+        padding-top: 2px;
     }
 }
