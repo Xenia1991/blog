@@ -1,13 +1,10 @@
 /* eslint-disable prefer-destructuring */
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { editProfileThunk } from '../../redux/account-reducer';
 import Loader from '../loader';
-import SuccessMessage from '../success-message';
 
 import classes from './edit-profile-form.module.scss';
 import { schema } from './schema';
@@ -15,7 +12,6 @@ import { schema } from './schema';
 const EditProfileForm = () => {
   let user = useSelector((state) => state.account.user);
   const isEditingLoader = useSelector((state) => state.account.isEditingLoader);
-  const navigation = useNavigate();
   const dispatch = useDispatch();
   let token;
 

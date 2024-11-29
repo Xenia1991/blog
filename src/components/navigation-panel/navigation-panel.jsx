@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { useEffect } from 'react';
 
 import { fetchArticlesThunk } from '../../redux/article-reducer';
-import { accountReducerSlice, editProfileThunk } from '../../redux/account-reducer';
+import { accountReducerSlice } from '../../redux/account-reducer';
 import avatar from '../../assets/images/avatar.png';
 
 import classes from './navigation-panel.module.scss';
