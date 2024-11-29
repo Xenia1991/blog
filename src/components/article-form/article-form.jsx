@@ -1,4 +1,6 @@
-import { useForm, useFieldArray } from 'react-hook-form';
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/no-unknown-property */
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import classes from './article-form.module.scss';
@@ -10,14 +12,25 @@ const ArticleForm = () => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
+    control,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onBlur',
+    defaultValues: {
+      tagList: [{ tag: 'first' }],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'tagList',
   });
 
   const onSubmit = (evt) => {
     console.log(evt);
   };
+
+  console.log(fields);
 
   return (
     <div className={classes['article-form-container']}>
@@ -48,19 +61,39 @@ const ArticleForm = () => {
           />
           <div className={classes['article-form__validation-error']}>{errors?.text?.message}</div>
         </label>
-        <div className={classes['article-form__tags-area']}>
+        <form className={classes['article-form__tags-area']}>
           <p className={classes['article-form__title']}>Tags</p>
-          <div className={classes['article-form__single-tag']}>
-            <input className={classes['article-form__tag-input']} type="text" />
-            <button className={classes['article-form__delete-button']} type="submit">
-              Delete
-            </button>
-            <button className={classes['article-form__add-button']} type="submit">
-              Add tag
-            </button>
-          </div>
-        </div>
-        <button type="submit" className={classes['article-form__button']}>
+          <ul>
+            {fields.map((item, index) => (
+              <li key={item.id} className={classes['article-form__single-tag']}>
+                <Controller
+                  render={({ field }) => (
+                    <input
+                      {...register(`tagList.${index}.tag`)}
+                      className={classes['article-form__tag-input']}
+                      {...field}
+                    />
+                  )}
+                  name={`tagList.${index}.tag`}
+                  control={control}
+                />
+                <button type="button" onClick={() => remove(index)} className={classes['article-form__delete-button']}>
+                  Delete
+                </button>
+                {fields.length - 1 === index ? (
+                  <button
+                    className={classes['article-form__add-button']}
+                    type="button"
+                    onClick={() => append({ tag: 'first' })}
+                  >
+                    Add tag
+                  </button>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </form>
+        <button type="submit" className={classes['article-form__button']} disabled={!isValid}>
           Send
         </button>
       </form>
