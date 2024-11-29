@@ -1,14 +1,21 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { editProfileThunk } from '../../redux/account-reducer';
+import Loader from '../loader';
 
 import classes from './edit-profile-form.module.scss';
 import { schema } from './schema';
 
 const EditProfileForm = () => {
+  const user = useSelector((state) => state.account.user);
+  const isEditingLoader = useSelector((state) => state.account.isEditingLoader);
+  const navigation = useNavigate();
   const dispatch = useDispatch();
+  const { token } = user;
 
   const {
     register,
@@ -21,9 +28,20 @@ const EditProfileForm = () => {
   });
 
   const onSubmit = (evt) => {
-    dispatch(editProfileThunk(evt));
+    const userInfo = { ...evt, token };
+    dispatch(editProfileThunk(userInfo));
     reset();
   };
+
+  useEffect(() => {
+    if (user) {
+      navigation('/');
+    }
+  }, [user, navigation]);
+
+  if (isEditingLoader) {
+    return <Loader />;
+  }
 
   return (
     <div className={classes['edit-form-container']}>

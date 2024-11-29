@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { useEffect } from 'react';
 
 import { fetchArticlesThunk } from '../../redux/article-reducer';
-import { accountReducerSlice } from '../../redux/account-reducer';
+import { accountReducerSlice, editProfileThunk } from '../../redux/account-reducer';
+import avatar from '../../assets/images/avatar.png';
 
 import classes from './navigation-panel.module.scss';
 
@@ -17,6 +19,11 @@ const NavigationPanel = () => {
   const createArticle = classNames(classes.navigation__button, classes['navigation__button-create-article']);
   const profile = classNames(classes.navigation__button, classes['navigation__button-profile']);
   const logOutButton = classNames(classes.navigation__button, classes['navigation__button-log-out']);
+  console.log(user);
+
+  // useEffect(() => {
+  //   dispatch(editProfileThunk(user));
+  // }, [user]);
 
   const handleLogoutClick = () => {
     dispatch(accountReducerSlice.actions.logOut());
@@ -38,7 +45,8 @@ const NavigationPanel = () => {
             Create article
           </a>
           <Link to="/profile" className={profile}>
-            {user?.username || 'user'}
+            <span>{user?.username || 'user'} </span>
+            <img src={user?.image || avatar} alt="user avatar" className={classes['navigation__button-image']} />
           </Link>
           <a href="/" className={logOutButton} onClick={handleLogoutClick}>
             Log Out

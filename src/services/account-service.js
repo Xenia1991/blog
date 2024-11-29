@@ -1,3 +1,6 @@
+/* eslint-disable quote-props */
+/* eslint-disable key-spacing */
+/* eslint-disable prettier/prettier */
 export const createAccount = async (userInfo, rejected) => {
   const user = { user: { username: userInfo.username, email: userInfo.email, password: userInfo.password } };
   try {
@@ -37,7 +40,13 @@ export const enterAccount = async (userInfo, rejected) => {
 export const editProfile = async (userInfo, rejected) => {
   try {
     const user = {
-      user: { email: userInfo.email, password: userInfo.password, username: userInfo.username, image: userInfo.image },
+      user: {
+        email: userInfo.email,
+        password: userInfo.password,
+        username: userInfo.username,
+        image: userInfo.avatar,
+        token: userInfo.token,
+      },
     };
     const editProfileRequest = await fetch('https://blog-platform.kata.academy/api/user', {
       method: 'PUT',

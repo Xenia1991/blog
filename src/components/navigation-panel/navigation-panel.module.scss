@@ -53,13 +53,18 @@
             width: 140px;
             height: 46px;
             text-align: left;
-            padding-top: 12px;
             box-sizing: border-box;
             font-family: 'Inter';
-            background-image: url('../../assets/images/avatar.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: 95% 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+        &-image {
+            width: 46px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 50%;
         }
         &-log-out {
             width: 108px;
