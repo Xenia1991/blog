@@ -54,6 +54,7 @@
       "dot-notation": "off",
       "import/no-named-as-default": "off",
       "react/jsx-props-no-spreading": "off",
+      "prefer-destructuring": "off",
       "import/order": [
         2,
         {
