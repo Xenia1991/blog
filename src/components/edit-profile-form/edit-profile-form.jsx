@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+/* eslint-disable prefer-destructuring */
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,16 +7,25 @@ import { useNavigate } from 'react-router-dom';
 
 import { editProfileThunk } from '../../redux/account-reducer';
 import Loader from '../loader';
+import SuccessMessage from '../success-message';
 
 import classes from './edit-profile-form.module.scss';
 import { schema } from './schema';
 
 const EditProfileForm = () => {
-  const user = useSelector((state) => state.account.user);
+  let user = useSelector((state) => state.account.user);
   const isEditingLoader = useSelector((state) => state.account.isEditingLoader);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const { token } = user;
+  let token;
+
+  if (user) {
+    token = user.token;
+  } else if (!user && localStorage.getItem('token') !== null) {
+    const dataFromStorage = JSON.parse(localStorage.getItem('user'));
+    user = dataFromStorage;
+    token = user.token;
+  }
 
   const {
     register,
@@ -32,12 +42,6 @@ const EditProfileForm = () => {
     dispatch(editProfileThunk(userInfo));
     reset();
   };
-
-  useEffect(() => {
-    if (user) {
-      navigation('/');
-    }
-  }, [user, navigation]);
 
   if (isEditingLoader) {
     return <Loader />;

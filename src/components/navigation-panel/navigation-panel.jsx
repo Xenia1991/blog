@@ -11,7 +11,7 @@ import classes from './navigation-panel.module.scss';
 
 const NavigationPanel = () => {
   const page = useSelector((state) => state.articles.page);
-  const user = useSelector((state) => state.account.user);
+  let user = useSelector((state) => state.account.user);
   const dispatch = useDispatch();
   const mainButtonClasses = classNames(classes.navigation__button, classes['navigation__button-main']);
   const signInButton = classNames(classes.navigation__button, classes['navigation__button-sign-in']);
@@ -19,11 +19,6 @@ const NavigationPanel = () => {
   const createArticle = classNames(classes.navigation__button, classes['navigation__button-create-article']);
   const profile = classNames(classes.navigation__button, classes['navigation__button-profile']);
   const logOutButton = classNames(classes.navigation__button, classes['navigation__button-log-out']);
-  console.log(user);
-
-  // useEffect(() => {
-  //   dispatch(editProfileThunk(user));
-  // }, [user]);
 
   const handleLogoutClick = () => {
     dispatch(accountReducerSlice.actions.logOut());
@@ -32,6 +27,11 @@ const NavigationPanel = () => {
   const handleClick = () => {
     dispatch(fetchArticlesThunk((page - 1) * 5));
   };
+
+  if (!user && localStorage.getItem('token') !== null) {
+    const dataFromStorage = JSON.parse(localStorage.getItem('user'));
+    user = dataFromStorage;
+  }
 
   return (
     <section className={classes.navigation}>

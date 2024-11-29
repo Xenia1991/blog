@@ -27,14 +27,15 @@ export const accountReducerSlice = createSlice({
     isEditingError: false,
   },
   reducers: {
-    logOut(state, action) {
+    logOut(state) {
       state.user = null;
       state.token = null;
+      localStorage.clear();
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createAccountThunk.pending, (state, action) => {
+      .addCase(createAccountThunk.pending, (state) => {
         state.isCreatingLoader = true;
       })
       .addCase(createAccountThunk.fulfilled, (state, action) => {
@@ -43,11 +44,11 @@ export const accountReducerSlice = createSlice({
         state.token = action.payload.token;
         state.user = action.payload.user;
       })
-      .addCase(createAccountThunk.rejected, (state, action) => {
+      .addCase(createAccountThunk.rejected, (state) => {
         state.isCreatingError = true;
         state.isCreatingLoader = false;
       })
-      .addCase(enterAccountThunk.pending, (state, action) => {
+      .addCase(enterAccountThunk.pending, (state) => {
         state.isEnteringLoader = true;
       })
       .addCase(enterAccountThunk.fulfilled, (state, action) => {
@@ -55,12 +56,14 @@ export const accountReducerSlice = createSlice({
         state.isEnteringError = false;
         state.token = action.payload.user.token;
         state.user = action.payload.user;
+        localStorage.setItem('token', JSON.stringify(action.payload.user.token));
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
-      .addCase(enterAccountThunk.rejected, (state, action) => {
+      .addCase(enterAccountThunk.rejected, (state) => {
         state.isEnteringError = true;
         state.isEnteringLoader = false;
       })
-      .addCase(editProfileThunk.pending, (state, action) => {
+      .addCase(editProfileThunk.pending, (state) => {
         state.isEditingLoader = true;
       })
       .addCase(editProfileThunk.fulfilled, (state, action) => {
@@ -68,8 +71,11 @@ export const accountReducerSlice = createSlice({
         state.isEditingError = false;
         state.token = action.payload.user.token;
         state.user = action.payload.user;
+        localStorage.clear();
+        localStorage.setItem('token', JSON.stringify(action.payload.user.token));
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
-      .addCase(editProfileThunk.rejected, (state, action) => {
+      .addCase(editProfileThunk.rejected, (state) => {
         state.isEditingError = true;
         state.isEditingLoader = false;
       });
