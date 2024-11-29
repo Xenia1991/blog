@@ -4,7 +4,8 @@
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 32px;
 }
 
 .article-form {
@@ -106,6 +107,7 @@
         border-radius: 5px;
         box-sizing: border-box;
         font-size: 16px;
+        cursor: pointer;
     }
     &__add-button {
         width: 136px;
@@ -117,5 +119,13 @@
         border-radius: 5px;
         box-sizing: border-box;
         font-size: 16px;
+        cursor: pointer;
+    }
+    &__validation-error {
+        height: '20px';
+        color: red;
+        font-size: 14px;
+        padding-left: 2px;
+        padding-top: 2px;
     }
 }
