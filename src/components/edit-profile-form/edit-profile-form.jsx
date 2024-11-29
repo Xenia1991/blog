@@ -48,12 +48,22 @@ const EditProfileForm = () => {
         <h5 className={classes['edit-form__header']}>Edit Profile</h5>
         <label className={classes['edit-form__username-label']}>
           <p className={classes['edit-form__text']}>Username</p>
-          <input type="text" className={classes['edit-form__input']} {...register('username')} />
+          <input
+            type="text"
+            className={classes['edit-form__input']}
+            {...register('username')}
+            defaultValue={user.username}
+          />
           <div className={classes['edit-form__validation-error']}>{errors?.username?.message}</div>
         </label>
         <label className={classes['edit-form__email-label']}>
           <p className={classes['edit-form__text']}>Email address</p>
-          <input type="email" className={classes['edit-form__input']} {...register('email')} />
+          <input
+            type="email"
+            className={classes['edit-form__input']}
+            {...register('email')}
+            defaultValue={user.email}
+          />
           <div className={classes['edit-form__validation-error']}>{errors?.email?.message}</div>
         </label>
         <label className={classes['edit-form__password-label']}>

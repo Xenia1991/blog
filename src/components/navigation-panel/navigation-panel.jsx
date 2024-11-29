@@ -40,9 +40,9 @@ const NavigationPanel = () => {
 
       {user ? (
         <div className={classes.navigation__section}>
-          <a href="/" className={createArticle}>
+          <Link to="/new-article" className={createArticle}>
             Create article
-          </a>
+          </Link>
           <Link to="/profile" className={profile}>
             <span>{user?.username || 'user'} </span>
             <img src={user?.image || avatar} alt="user avatar" className={classes['navigation__button-image']} />
