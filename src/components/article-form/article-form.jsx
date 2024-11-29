@@ -17,7 +17,7 @@ const ArticleForm = () => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues: {
-      tagList: [{ tag: 'first' }],
+      tagList: [{ tag: '' }],
     },
   });
 
@@ -29,8 +29,6 @@ const ArticleForm = () => {
   const onSubmit = (evt) => {
     console.log(evt);
   };
-
-  console.log(fields);
 
   return (
     <div className={classes['article-form-container']}>
@@ -77,14 +75,20 @@ const ArticleForm = () => {
                   name={`tagList.${index}.tag`}
                   control={control}
                 />
-                <button type="button" onClick={() => remove(index)} className={classes['article-form__delete-button']}>
-                  Delete
-                </button>
+                {fields.length !== 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className={classes['article-form__delete-button']}
+                  >
+                    Delete
+                  </button>
+                ) : null}
                 {fields.length - 1 === index ? (
                   <button
                     className={classes['article-form__add-button']}
                     type="button"
-                    onClick={() => append({ tag: 'first' })}
+                    onClick={() => append({ tag: '' })}
                   >
                     Add tag
                   </button>
