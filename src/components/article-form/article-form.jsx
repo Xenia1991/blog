@@ -2,11 +2,17 @@
 /* eslint-disable react/no-unknown-property */
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
+
+import { createArticleThunk } from '../../redux/my-article-reducer';
 
 import classes from './article-form.module.scss';
 import schema from './schema';
 
 const ArticleForm = () => {
+  const dispatch = useDispatch();
+  let userToken;
+
   const {
     register,
     formState: { errors, isValid },
@@ -21,6 +27,10 @@ const ArticleForm = () => {
     },
   });
 
+  if (localStorage.getItem('token') !== null) {
+    userToken = JSON.parse(localStorage.getItem('token'));
+  }
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'tagList',
@@ -28,6 +38,18 @@ const ArticleForm = () => {
 
   const onSubmit = (evt) => {
     console.log(evt);
+    const tagsList = [];
+    evt.tagList.forEach((tag) => {
+      tagsList.push(tag.tag);
+    });
+    const article = {
+      title: evt.title,
+      description: evt.description,
+      body: evt.text,
+      tagList: tagsList,
+      token: userToken,
+    };
+    dispatch(createArticleThunk(article));
   };
 
   return (
