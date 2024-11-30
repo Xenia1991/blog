@@ -2,15 +2,21 @@
 /* eslint-disable react/no-unknown-property */
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { createArticleThunk } from '../../redux/my-article-reducer';
+import Loader from '../loader';
 
 import classes from './article-form.module.scss';
 import schema from './schema';
 
 const ArticleForm = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.myArticle.isCreatingLoading);
+  const createdArticle = useSelector((state) => state.myArticle.article);
+  const navigation = useNavigate();
   let userToken;
 
   const {
@@ -37,7 +43,6 @@ const ArticleForm = () => {
   });
 
   const onSubmit = (evt) => {
-    console.log(evt);
     const tagsList = [];
     evt.tagList.forEach((tag) => {
       tagsList.push(tag.tag);
@@ -50,7 +55,18 @@ const ArticleForm = () => {
       token: userToken,
     };
     dispatch(createArticleThunk(article));
+    reset();
   };
+
+  useEffect(() => {
+    if (createdArticle) {
+      navigation('/');
+    }
+  }, [createdArticle, navigation]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className={classes['article-form-container']}>

@@ -18,6 +18,10 @@ const ArticlesList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchArticlesThunk(0));
+  }, []);
+
+  useEffect(() => {
     if (page === 0) {
       dispatch(fetchArticlesThunk(0));
     } else {
