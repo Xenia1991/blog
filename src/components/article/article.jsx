@@ -73,7 +73,7 @@ const Article = () => {
               className={classes['article__author-avatar']}
             />
           </div>
-          {article.author.username === user.username ? (
+          {article.author.username === user?.username ? (
             <div className={classes['article__button']}>
               <button type="button" className={classes['article__delete-button']}>
                 Delete
