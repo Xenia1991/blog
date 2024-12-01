@@ -15,6 +15,7 @@ import classes from './article.module.scss';
 
 const Article = () => {
   const article = useSelector((state) => state.articles.article);
+  const user = useSelector((state) => state.account.user);
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
   const dispatch = useDispatch();
@@ -62,10 +63,26 @@ const Article = () => {
         </section>
         <section className={classes['article__author-section']}>
           <div className={classes['article__name-date-section']}>
-            <div className={classes['article__author-name']}>{article.author.username}</div>
-            <div className={classes['article__date-of-creation']}>{creationDate}</div>
+            <div>
+              <div className={classes['article__author-name']}>{article.author.username}</div>
+              <div className={classes['article__date-of-creation']}>{creationDate}</div>
+            </div>
+            <img
+              src={article.author.image || avatar}
+              alt="Author avatar"
+              className={classes['article__author-avatar']}
+            />
           </div>
-          <img src={article.author.image || avatar} alt="Author avatar" className={classes['article__author-avatar']} />
+          {article.author.username === user.username ? (
+            <div className={classes['article__button']}>
+              <button type="button" className={classes['article__delete-button']}>
+                Delete
+              </button>
+              <button type="button" className={classes['article__edit-button']}>
+                Edit
+              </button>
+            </div>
+          ) : null}
         </section>
       </div>
       <div className={classes['article-body']}>

@@ -7,6 +7,7 @@ import Paginations from '../pagination';
 import Loader from '../loader';
 import Error from '../error/error';
 import { fetchArticlesThunk } from '../../redux/article-reducer';
+import { accountReducerSlice } from '../../redux/account-reducer';
 
 import classes from './articles-list.module.scss';
 
@@ -19,6 +20,7 @@ const ArticlesList = () => {
 
   useEffect(() => {
     dispatch(fetchArticlesThunk(0));
+    dispatch(accountReducerSlice.actions.setUser());
   }, []);
 
   useEffect(() => {

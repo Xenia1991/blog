@@ -32,6 +32,12 @@ export const accountReducerSlice = createSlice({
       state.token = null;
       localStorage.clear();
     },
+    setUser(state) {
+      if (localStorage.getItem('user') !== null) {
+        state.user = JSON.parse(localStorage.getItem('user'));
+        state.token = JSON.parse(localStorage.getItem('token'));
+      }
+    },
   },
   extraReducers: (builder) => {
     builder

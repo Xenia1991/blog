@@ -18,10 +18,11 @@
     }
     &__author-section {
         width: 22%;
-        height: 50px;
+        height: auto;
         padding: 14px;
         display: flex;
-        justify-content: flex-end;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
         gap: 10px;
     }
@@ -75,9 +76,9 @@
     }
     &__name-date-section {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        row-gap: 6px;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 6px;
     }
     &__author-name {
         font-size: 18px;
@@ -92,6 +93,33 @@
         height: 46px;
         object-fit: cover;
         border-radius: 50%;
+    }
+    &__button {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        background-color: inherit;
+        box-sizing: border-box;
+    }
+    &__delete-button {
+        width: 78px;
+        height: 32px;
+        background-color: inherit;
+        box-sizing: border-box;
+        border: 1px solid #F5222D;
+        border-radius: 5px;
+        color: #F5222D;
+        cursor: pointer;
+    }
+    &__edit-button {
+        width: 78px;
+        height: 32px;
+        background-color: inherit;
+        box-sizing: border-box;
+        border: 1px solid #52C41A;
+        border-radius: 5px;
+        color: #52C41A;
+        cursor: pointer;
     }
     :global(.ant-typography code) {
         font-family: 'Inter'!important; 
