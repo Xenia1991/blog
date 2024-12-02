@@ -37,6 +37,7 @@ const createArticleSlice = createSlice({
       })
       .addCase(createArticleThunk.rejected, (state, action) => {
         state.isCreatingLoading = false;
+        state.isEditingError = null;
         state.isCreatingError = true;
       })
       .addCase(editArticleThunk.pending, (state, action) => {

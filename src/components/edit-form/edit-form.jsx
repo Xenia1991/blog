@@ -62,11 +62,11 @@ const EditForm = () => {
     reset();
   };
 
-  useEffect(() => {
-    if (isEditingError === null) {
-      navigation('/');
-    }
-  }, [isEditingError, navigation]);
+  //   useEffect(() => {
+  //     if (isEditingError === false) {
+  //       navigation('/');
+  //     }
+  //   }, [isEditingError, navigation]);
 
   if (isEditingLoading) {
     return <Loader />;
