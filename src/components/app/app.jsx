@@ -7,6 +7,7 @@ import SignInForm from '../sign-in-form';
 import SignUpForm from '../sign-up-form';
 import EditProfileForm from '../edit-profile-form';
 import ArticleForm from '../article-form';
+import EditForm from '../edit-form/edit-form';
 
 import classes from './app.module.scss';
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<ArticlesList />} />
         <Route path="/articles" element={<ArticlesList />} />
         <Route path="/articles/:slug" element={<Article />} />
+        <Route path="/articles/:slug/edit" element={<EditForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/profile" element={<EditProfileForm />} />

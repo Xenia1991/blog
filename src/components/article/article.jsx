@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { Typography } from 'antd';
 import { format } from 'date-fns';
 import Markdown from 'markdown-to-jsx';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { fetchArticleThunk, fetchArticlesThunk } from '../../redux/article-reducer';
 import Loader from '../loader';
@@ -78,9 +78,9 @@ const Article = () => {
               <button type="button" className={classes['article__delete-button']}>
                 Delete
               </button>
-              <button type="button" className={classes['article__edit-button']}>
+              <Link to={`/articles/${slug}/edit`} type="button" className={classes['article__edit-button']}>
                 Edit
-              </button>
+              </Link>
             </div>
           ) : null}
         </section>

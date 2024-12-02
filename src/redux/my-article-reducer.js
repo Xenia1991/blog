@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { createArticle } from '../services/my-articles-service';
+import { createArticle, editArticle } from '../services/my-articles-service';
 
 export const createArticleThunk = createAsyncThunk(
   'myArticle/createArticleFetch',
@@ -9,12 +9,18 @@ export const createArticleThunk = createAsyncThunk(
   }
 );
 
+export const editArticleThunk = createAsyncThunk('myArticle/editArticleFetch', async (article, { rejectWithValue }) => {
+  return editArticle(article, rejectWithValue);
+});
+
 const createArticleSlice = createSlice({
   name: 'myArticle',
   initialState: {
     article: null,
     isCreatingLoading: null,
     isCreatingError: null,
+    isEditingLoading: null,
+    isEditingError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -32,6 +38,20 @@ const createArticleSlice = createSlice({
       .addCase(createArticleThunk.rejected, (state, action) => {
         state.isCreatingLoading = false;
         state.isCreatingError = true;
+      })
+      .addCase(editArticleThunk.pending, (state, action) => {
+        state.isEditingLoading = true;
+        state.isEditingError = false;
+        state.article = null;
+      })
+      .addCase(editArticleThunk.fulfilled, (state, action) => {
+        state.isEditingLoading = false;
+        state.isEditingError = false;
+        state.article = action.payload;
+      })
+      .addCase(editArticleThunk.rejected, (state, action) => {
+        state.isEditingLoading = false;
+        state.isEditingError = true;
       });
   },
 });
