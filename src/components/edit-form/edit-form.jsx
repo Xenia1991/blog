@@ -15,7 +15,7 @@ import schema from './schema';
 const EditForm = () => {
   const dispatch = useDispatch();
   const article = useSelector((state) => state.articles.article);
-  const editingArticle = useSelector((state) => state.myArticle.article);
+  const isEditingError = useSelector((state) => state.myArticle.isEditingError);
   const isEditingLoading = useSelector((state) => state.myArticle.isEditingLoading);
   const user = useSelector((state) => state.account.user);
   const userToken = useSelector((state) => state.account.token);
@@ -63,59 +63,59 @@ const EditForm = () => {
   };
 
   useEffect(() => {
-    if (editingArticle) {
+    if (isEditingError === null) {
       navigation('/');
     }
-  }, [editingArticle, navigation]);
+  }, [isEditingError, navigation]);
 
   if (isEditingLoading) {
     return <Loader />;
   }
 
   return (
-    <div className={classes['article-form-container']}>
-      <form className={classes['article-form']} onSubmit={handleSubmit(onSubmit)}>
-        <h5 className={classes['article-form__header']}>Edit article</h5>
-        <label className={classes['article-from__article-title']}>
-          <p className={classes['article-form__title']}>Title</p>
+    <div className={classes['edit-form-container']}>
+      <form className={classes['edit-form']} onSubmit={handleSubmit(onSubmit)}>
+        <h5 className={classes['edit-form__header']}>Edit article</h5>
+        <label className={classes['edit-from__article-title']}>
+          <p className={classes['edit-form__title']}>Title</p>
           <input
             {...register('title')}
-            className={classes['article-form__input']}
+            className={classes['edit-form__input']}
             defaultValue={article.title}
             type="text"
           />
-          <div className={classes['article-form__validation-error']}>{errors?.title?.message}</div>
+          <div className={classes['edit-form__validation-error']}>{errors?.title?.message}</div>
         </label>
-        <label className={classes['article-from__article-description']}>
-          <p className={classes['article-form__title']}>Short description</p>
+        <label className={classes['edit-from__article-description']}>
+          <p className={classes['edit-form__title']}>Short description</p>
           <input
             {...register('description')}
-            className={classes['article-form__input']}
+            className={classes['edit-form__input']}
             defaultValue={article.description}
             type="text"
           />
-          <div className={classes['article-form__validation-error']}>{errors?.description?.message}</div>
+          <div className={classes['edit-form__validation-error']}>{errors?.description?.message}</div>
         </label>
-        <label className={classes['article-from__article-body']}>
-          <p className={classes['article-form__title']}>Text</p>
+        <label className={classes['edit-from__article-body']}>
+          <p className={classes['edit-form__title']}>Text</p>
           <textarea
             {...register('text')}
-            className={classes['article-form__textarea']}
+            className={classes['edit-form__textarea']}
             defaultValue={article.body}
             type="text"
           />
-          <div className={classes['article-form__validation-error']}>{errors?.text?.message}</div>
+          <div className={classes['edit-form__validation-error']}>{errors?.text?.message}</div>
         </label>
-        <form className={classes['article-form__tags-area']}>
-          <p className={classes['article-form__title']}>Tags</p>
+        <form className={classes['edit-form__tags-area']}>
+          <p className={classes['edit-form__title']}>Tags</p>
           <ul>
             {fields.map((item, index) => (
-              <li key={item.id} className={classes['article-form__single-tag']}>
+              <li key={item.id} className={classes['edit-form__single-tag']}>
                 <Controller
                   render={({ field }) => (
                     <input
                       {...register(`tagList.${index}.name`)}
-                      className={classes['article-form__tag-input']}
+                      className={classes['edit-form__tag-input']}
                       {...field}
                       defaultValue={field.name}
                     />
@@ -124,17 +124,13 @@ const EditForm = () => {
                   control={control}
                 />
                 {fields.length !== 1 ? (
-                  <button
-                    type="button"
-                    onClick={() => remove(index)}
-                    className={classes['article-form__delete-button']}
-                  >
+                  <button type="button" onClick={() => remove(index)} className={classes['edit-form__delete-button']}>
                     Delete
                   </button>
                 ) : null}
                 {fields.length - 1 === index ? (
                   <button
-                    className={classes['article-form__add-button']}
+                    className={classes['edit-form__add-button']}
                     type="button"
                     onClick={() => append({ name: '' })}
                   >
@@ -145,7 +141,7 @@ const EditForm = () => {
             ))}
           </ul>
         </form>
-        <button type="submit" className={classes['article-form__button']} disabled={!isValid}>
+        <button type="submit" className={classes['edit-form__button']} disabled={!isValid}>
           Send
         </button>
       </form>
