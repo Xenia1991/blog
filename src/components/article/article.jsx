@@ -20,13 +20,16 @@ const Article = () => {
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
   const dispatch = useDispatch();
-  const { token } = user;
+  let token;
+
   const { slug } = useParams();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const navigation = useNavigate();
 
-  console.log(token);
+  if (user) {
+    token = user.token;
+  }
 
   useEffect(() => {
     dispatch(fetchArticlesThunk());
