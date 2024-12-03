@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
-import { Typography } from 'antd';
+import { Typography, Popconfirm } from 'antd';
 import { format } from 'date-fns';
 import Markdown from 'markdown-to-jsx';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 import { fetchArticleThunk, fetchArticlesThunk } from '../../redux/article-reducer';
+import { deleteArticleThunk } from '../../redux/my-article-reducer';
 import Loader from '../loader';
 import Error from '../error/error';
 import avatar from '../../assets/images/avatar.png';
@@ -19,12 +20,41 @@ const Article = () => {
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
   const dispatch = useDispatch();
+  const { token } = user;
   const { slug } = useParams();
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const navigation = useNavigate();
+
+  console.log(token);
 
   useEffect(() => {
     dispatch(fetchArticlesThunk());
     dispatch(fetchArticleThunk(slug));
   }, []);
+
+  const showPopconfirm = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    const info = {
+      token,
+      slug,
+    };
+    setConfirmLoading(true);
+    dispatch(deleteArticleThunk(info));
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+    navigation('/articles');
+  };
+
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setOpen(false);
+  };
 
   if (!article || isLoading) {
     return <Loader />;
@@ -75,9 +105,21 @@ const Article = () => {
           </div>
           {article.author.username === user?.username ? (
             <div className={classes['article__button']}>
-              <button type="button" className={classes['article__delete-button']}>
-                Delete
-              </button>
+              <Popconfirm
+                description="Are you sure to delete this article?"
+                open={open}
+                onConfirm={handleOk}
+                okText="Yes"
+                cancelText="No"
+                okButtonProps={{
+                  loading: confirmLoading,
+                }}
+                onCancel={handleCancel}
+              >
+                <button type="button" className={classes['article__delete-button']} onClick={showPopconfirm}>
+                  Delete
+                </button>
+              </Popconfirm>
               <Link to={`/articles/${slug}/edit`} type="button" className={classes['article__edit-button']}>
                 Edit
               </Link>

@@ -39,10 +39,26 @@ export const editArticle = async (updatedArticleInfo, rejected) => {
       body: JSON.stringify(article),
     });
     if (!editRequest.ok) {
-      throw new Error('error in createArticleRequest');
+      throw new Error('error in editArticleRequest');
     }
     const successEdition = await editRequest.json();
     return successEdition;
+  } catch (error) {
+    return rejected(error);
+  }
+};
+
+export const deleteArticle = async (info, rejected) => {
+  try {
+    const deleteRequest = await fetch(`https://blog-platform.kata.academy/api/articles/${info.slug}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Token ${info.token}` },
+    });
+    if (!deleteRequest.ok) {
+      throw new Error('error in deleteArticleRequest');
+    }
+    const successDelete = await deleteRequest.json();
+    return successDelete;
   } catch (error) {
     return rejected(error);
   }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { createArticle, editArticle } from '../services/my-articles-service';
+import { createArticle, editArticle, deleteArticle } from '../services/my-articles-service';
 
 export const createArticleThunk = createAsyncThunk(
   'myArticle/createArticleFetch',
@@ -13,6 +13,10 @@ export const editArticleThunk = createAsyncThunk('myArticle/editArticleFetch', a
   return editArticle(article, rejectWithValue);
 });
 
+export const deleteArticleThunk = createAsyncThunk('myArticleDelete/deleteFetch', async (info, { rejectWithValue }) => {
+  return deleteArticle(info, rejectWithValue);
+});
+
 const createArticleSlice = createSlice({
   name: 'myArticle',
   initialState: {
@@ -21,6 +25,9 @@ const createArticleSlice = createSlice({
     isCreatingError: null,
     isEditingLoading: null,
     isEditingError: null,
+    isDeleteLoading: null,
+    isDeleted: null,
+    isDeleteError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -51,6 +58,16 @@ const createArticleSlice = createSlice({
       })
       .addCase(editArticleThunk.rejected, (state, action) => {
         state.isEditingError = true;
+      })
+      .addCase(deleteArticleThunk.pending, (state, action) => {
+        state.isDeleteLoading = true;
+      })
+      .addCase(deleteArticleThunk.fulfilled, (state, action) => {
+        state.isDeleteLoading = false;
+        state.isDeleted = true;
+      })
+      .addCase(deleteArticleThunk.rejected, (state, action) => {
+        state.isDeleteError = true;
       });
   },
 });

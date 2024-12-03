@@ -126,6 +126,10 @@
     :global(.ant-typography code) {
         font-family: 'Inter'!important; 
     }
+    :global(.ant-popover) {
+        width: 246px;
+        height: 104px;
+    }
 }
 .article-body {
     width: 100%;
