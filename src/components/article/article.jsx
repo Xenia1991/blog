@@ -117,6 +117,9 @@ const Article = () => {
                 okButtonProps={{
                   loading: confirmLoading,
                 }}
+                placement="rightTop"
+                overlayStyle={{ width: '246px', height: '104px' }}
+                overlayInnerStyle={{ marginTop: '0px' }}
                 onCancel={handleCancel}
               >
                 <button type="button" className={classes['article__delete-button']} onClick={showPopconfirm}>
