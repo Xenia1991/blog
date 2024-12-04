@@ -6,11 +6,18 @@ import { format } from 'date-fns';
 import Markdown from 'markdown-to-jsx';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
-import { fetchArticleThunk, fetchArticlesThunk } from '../../redux/article-reducer';
+import {
+  fetchArticleThunk,
+  fetchArticlesThunk,
+  fetchFavoriteThunk,
+  fetchUnfavoriteThunk,
+} from '../../redux/article-reducer';
 import { deleteArticleThunk } from '../../redux/my-article-reducer';
 import Loader from '../loader';
 import Error from '../error/error';
 import avatar from '../../assets/images/avatar.png';
+import favorite from '../../assets/images/favourite.png';
+import heart from '../../assets/images/heart.png';
 
 import classes from './article.module.scss';
 
@@ -21,7 +28,6 @@ const Article = () => {
   const isError = useSelector((state) => state.articles.isError);
   const dispatch = useDispatch();
   let token;
-
   const { slug } = useParams();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -29,11 +35,17 @@ const Article = () => {
 
   if (user) {
     token = user.token;
+  } else {
+    token = JSON.parse(localStorage.getItem('token'));
   }
 
   useEffect(() => {
+    const info = {
+      token,
+      slug,
+    };
     dispatch(fetchArticlesThunk());
-    dispatch(fetchArticleThunk(slug));
+    dispatch(fetchArticleThunk(info));
   }, []);
 
   const showPopconfirm = () => {
@@ -66,6 +78,22 @@ const Article = () => {
     return <Error />;
   }
 
+  const handleFavorite = () => {
+    const info = {
+      token,
+      slug,
+    };
+    dispatch(fetchFavoriteThunk(info));
+  };
+
+  const handleUnfavorite = () => {
+    const info = {
+      token,
+      slug,
+    };
+    dispatch(fetchUnfavoriteThunk(info));
+  };
+
   const { Text } = Typography;
   let tags;
   if (article.tagList) {
@@ -77,6 +105,7 @@ const Article = () => {
   } else {
     tags = [];
   }
+
   const creationDate = format(new Date(article.createdAt), 'MMMM dd, yyyy');
 
   return (
@@ -85,8 +114,12 @@ const Article = () => {
         <section className={classes['article__text-section']}>
           <div className={classes['article__header']}>
             <h5 className={classes['article__title']}>{article.title}</h5>
-            <button type="submit" className={classes['article__likes-section']}>
-              <span className={classes['article__like']} />
+            <button
+              type="button"
+              className={classes['article__likes-section']}
+              onClick={article.favorited ? handleUnfavorite : handleFavorite}
+            >
+              <img src={article.favorited ? favorite : heart} className={classes['article__like']} alt="like" />
               <span className={classes['article__count']}>{article.favoritesCount}</span>
             </button>
           </div>

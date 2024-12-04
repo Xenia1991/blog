@@ -7,8 +7,8 @@ export const fetchArticlesThunk = createAsyncThunk('articles/fetchArticles', asy
   return getArticles(info, rejectWithValue);
 });
 
-export const fetchArticleThunk = createAsyncThunk('article/fetchArticle', async (slug, { rejectWithValue }) => {
-  return getSingleArticle(slug, rejectWithValue);
+export const fetchArticleThunk = createAsyncThunk('article/fetchArticle', async (info, { rejectWithValue }) => {
+  return getSingleArticle(info, rejectWithValue);
 });
 
 export const fetchFavoriteThunk = createAsyncThunk('article/fetchFavourite', async (info, { rejectWithValue }) => {
@@ -75,6 +75,8 @@ export const articlesReducerSlice = createSlice({
           action.payload.article,
           ...state.articles.slice(index + 1),
         ];
+        state.article = action.payload.article;
+        console.log(state.article);
       })
       .addCase(fetchFavoriteThunk.rejected, (state, action) => {
         state.isErrorFavorite = true;
@@ -90,6 +92,7 @@ export const articlesReducerSlice = createSlice({
           action.payload.article,
           ...state.articles.slice(index + 1),
         ];
+        state.article = action.payload.article;
       })
       .addCase(fetchUnfavoriteThunk.rejected, (state, action) => {
         state.isErrorFavorite = true;
