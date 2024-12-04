@@ -1,14 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import getArticles from '../services/articles-list-service';
+import { getArticles, markFavorite, markUnfavorite } from '../services/articles-list-service';
 import getSingleArticle from '../services/article-service';
 
-export const fetchArticlesThunk = createAsyncThunk('articles/fetchArticles', async (offset, { rejectWithValue }) => {
-  return getArticles(offset, rejectWithValue);
+export const fetchArticlesThunk = createAsyncThunk('articles/fetchArticles', async (info, { rejectWithValue }) => {
+  return getArticles(info, rejectWithValue);
 });
 
 export const fetchArticleThunk = createAsyncThunk('article/fetchArticle', async (slug, { rejectWithValue }) => {
   return getSingleArticle(slug, rejectWithValue);
+});
+
+export const fetchFavoriteThunk = createAsyncThunk('article/fetchFavourite', async (info, { rejectWithValue }) => {
+  return markFavorite(info, rejectWithValue);
+});
+
+export const fetchUnfavoriteThunk = createAsyncThunk('article/fetchUnfavourite', async (info, { rejectWithValue }) => {
+  return markUnfavorite(info, rejectWithValue);
 });
 
 export const articlesReducerSlice = createSlice({
@@ -20,6 +28,8 @@ export const articlesReducerSlice = createSlice({
     articlesCount: null,
     isError: false,
     page: 0,
+    isLoadingFavorite: null,
+    isErrorFavorite: null,
   },
   reducers: {
     changePage: (state, action) => {
@@ -53,6 +63,36 @@ export const articlesReducerSlice = createSlice({
       .addCase(fetchArticleThunk.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
+      })
+      .addCase(fetchFavoriteThunk.pending, (state, action) => {
+        state.isLoadingFavorite = true;
+      })
+      .addCase(fetchFavoriteThunk.fulfilled, (state, action) => {
+        state.isLoadingFavorite = false;
+        const index = state.articles.findIndex((article) => article.slug === action.payload.article.slug);
+        state.articles = [
+          ...state.articles.slice(0, index),
+          action.payload.article,
+          ...state.articles.slice(index + 1),
+        ];
+      })
+      .addCase(fetchFavoriteThunk.rejected, (state, action) => {
+        state.isErrorFavorite = true;
+      })
+      .addCase(fetchUnfavoriteThunk.pending, (state, action) => {
+        state.isLoadingFavorite = true;
+      })
+      .addCase(fetchUnfavoriteThunk.fulfilled, (state, action) => {
+        state.isLoadingFavorite = false;
+        const index = state.articles.findIndex((article) => article.slug === action.payload.article.slug);
+        state.articles = [
+          ...state.articles.slice(0, index),
+          action.payload.article,
+          ...state.articles.slice(index + 1),
+        ];
+      })
+      .addCase(fetchUnfavoriteThunk.rejected, (state, action) => {
+        state.isErrorFavorite = true;
       });
   },
 });

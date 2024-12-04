@@ -2,16 +2,24 @@ import { Typography } from 'antd';
 import { nanoid } from 'nanoid';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchArticleThunk } from '../../redux/article-reducer';
+import { fetchArticleThunk, fetchFavoriteThunk, fetchUnfavoriteThunk } from '../../redux/article-reducer';
 import avatar from '../../assets/images/avatar.png';
+import heart from '../../assets/images/heart.png';
+import favorite from '../../assets/images/favourite.png';
 
 import classes from './article-preview.module.scss';
 
 const ArticlePreview = ({ article }) => {
+  const user = useSelector((state) => state.account.user);
   const { slug } = article;
+  let token;
   const dispatch = useDispatch();
+
+  if (user) {
+    token = user.token;
+  }
 
   const cutTitle = (title) => {
     if (title.length > 40) {
@@ -31,6 +39,22 @@ const ArticlePreview = ({ article }) => {
 
   const handleClick = () => {
     dispatch(fetchArticleThunk(slug));
+  };
+
+  const handleFavorite = () => {
+    const info = {
+      token,
+      slug,
+    };
+    dispatch(fetchFavoriteThunk(info));
+  };
+
+  const handleUnfavorite = () => {
+    const info = {
+      token,
+      slug,
+    };
+    dispatch(fetchUnfavoriteThunk(info));
   };
 
   const { Text } = Typography;
@@ -58,8 +82,12 @@ const ArticlePreview = ({ article }) => {
           <Link to={`/articles/${slug}`} className={classes['article-preview__title']} onClick={handleClick}>
             {title}
           </Link>
-          <button type="submit" className={classes['article-preview__likes-section']}>
-            <span className={classes['article-preview__like']} />
+          <button
+            type="button"
+            className={classes['article-preview__likes-section']}
+            onClick={article.favorited ? handleUnfavorite : handleFavorite}
+          >
+            <img src={article.favorited ? favorite : heart} className={classes['article-preview__like']} alt="like" />
             <span className={classes['article-preview__count']}>{article.favoritesCount}</span>
           </button>
         </div>
