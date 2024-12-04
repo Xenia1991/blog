@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Typography, Popconfirm } from 'antd';
@@ -27,24 +27,28 @@ const Article = () => {
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
   const dispatch = useDispatch();
-  let token;
+  const page = useSelector((state) => state.articles.page);
+  const token = useMemo(() => {
+    let userToken;
+    if (user) {
+      userToken = user.token;
+    } else {
+      userToken = JSON.parse(localStorage.getItem('token'));
+    }
+    return userToken;
+  }, [user]);
   const { slug } = useParams();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const navigation = useNavigate();
 
-  if (user) {
-    token = user.token;
-  } else {
-    token = JSON.parse(localStorage.getItem('token'));
-  }
-
   useEffect(() => {
     const info = {
       token,
-      slug,
+      slug: slug || article.slug,
+      offset: page === 0 ? 0 : (page - 1) * 5,
     };
-    dispatch(fetchArticlesThunk());
+    dispatch(fetchArticlesThunk(info));
     dispatch(fetchArticleThunk(info));
   }, []);
 

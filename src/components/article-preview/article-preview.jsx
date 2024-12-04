@@ -38,7 +38,11 @@ const ArticlePreview = ({ article }) => {
   };
 
   const handleClick = () => {
-    dispatch(fetchArticleThunk(slug));
+    const info = {
+      token,
+      slug,
+    };
+    dispatch(fetchArticleThunk(info));
   };
 
   const handleFavorite = () => {
