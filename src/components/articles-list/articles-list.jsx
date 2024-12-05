@@ -33,7 +33,7 @@ const ArticlesList = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchArticlesThunk(0));
+    dispatch(fetchArticlesThunk(info));
     dispatch(accountReducerSlice.actions.setUser());
   }, []);
 
