@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .sign-in-section {
     width: 100%;
     min-height: calc(100vh - 82px);
@@ -11,18 +13,18 @@
 .sign-in-form {
     width: 384px;
     height: auto;
-    background-color: #FFFFFF;
+    background-color: $base-background;
     border-radius: 6px;
-    box-shadow: 0px 4px 12px 0px #00000026;
+    box-shadow: 0px 4px 12px 0px $box-shadow-color;
     display: flex;
     flex-direction: column;
     padding: 48px 32px;
-    font-family: 'Roboto';
+    font-family: $roboto;
     box-sizing: border-box;
     &__header {
         font-size: 20px;
         text-align: center;
-        color: #262626;
+        color: $header-text-color;
     }
     &__email-label {
         display: flex;
@@ -31,7 +33,7 @@
     }
     &__text {
         font-size: 14px;
-        color: #262626;
+        color: $header-text-color;
     }
     &__input {
         height: 40px;
@@ -39,10 +41,10 @@
         box-sizing: border-box;
         padding: 8px 12px;
         margin-top: 2px;
-        border: 1px solid #D9D9D9;
+        border: 1px solid $input-border;
         font-size: 16px;
         &::placeholder {  
-            color: #BFBFBF;
+            color: $input-placeholder;
         }
         &--error {
             height: 40px;
@@ -50,7 +52,7 @@
             box-sizing: border-box;
             padding: 8px 12px;
             margin-top: 2px;
-            border: 1px solid red;
+            border: 1px solid $error-text-color;
             font-size: 16px;
         }
     }
@@ -63,8 +65,8 @@
         margin-top: 20px;
         height: 40px;
         border-radius: 5px;
-        background-color: #1890FF;
-        color: #FFFFFF;
+        background-color: $button-color;
+        color: $base-background;
         font-size: 16px;
         cursor: pointer;
     }
@@ -73,14 +75,14 @@
         text-align: center;
         height: 20px;
         font-size: 12px;
-        color: #8C8C8C;
+        color: $notification-text-color;
     }
     &__link {
-        color: #1890FF;
+        color: $link-color;
     }
     &__validation-error {
-        height: '20px';
-        color: red;
+        height: 20px;
+        color: $error-text-color;
         font-size: 14px;
         padding-left: 2px;
         padding-top: 2px;

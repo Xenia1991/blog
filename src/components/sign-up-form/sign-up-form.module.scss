@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .sign-up-container {
     width: 100%;
     height: calc(100vh - 82px);
@@ -12,17 +14,17 @@
     box-sizing: border-box;
     width: 384px;
     height: auto;
-    background-color: #FFFFFF;
+    background-color: $base-background;
     border-radius: 6px;
-    box-shadow: 0px 4px 12px 0px #00000026;
+    box-shadow: 0px 4px 12px 0px $box-shadow-color;
     display: flex;
     flex-direction: column;
-    font-family: 'Roboto';
+    font-family: $roboto;
     padding: 48px 32px;
     &__header {
         font-size: 20px;
         text-align: center;
-        color: #262626;
+        color: $header-text-color;
     }
     &__username-label {
         display: flex;
@@ -43,8 +45,8 @@
         margin-top: 20px;
         height: 40px;
         border-radius: 5px;
-        background-color: #1890FF;
-        color: #FFFFFF;
+        background-color: $button-color;
+        color: $base-background;
         font-size: 16px;
         cursor: pointer;
     }
@@ -53,10 +55,10 @@
         text-align: center;
         height: 20px;
         font-size: 12px;
-        color: #8C8C8C;
+        color: $notification-text-color;
     }
     &__link {
-        color: #1890FF;
+        color: $link-color;
     }
     &__input {
         border-radius: 5px;
@@ -64,10 +66,10 @@
         box-sizing: border-box;
         padding: 8px 12px;
         margin-top: 2px;
-        border: 1px solid #D9D9D9;
+        border: 1px solid $input-border;
         font-size: 16px;
         &::placeholder {  
-            color: #BFBFBF;
+            color: $input-placeholder;
         }
         &--error {
             height: 40px;
@@ -75,19 +77,19 @@
             box-sizing: border-box;
             padding: 8px 12px;
             margin-top: 2px;
-            border: 1px solid red;
+            border: 1px solid $error-text-color;
             font-size: 16px;
         }
     }
     &__text {
         font-size: 14px;
-        color: #262626;
+        color: $header-text-color;
     }
     &__agreement {
         margin-top: 21px;
         font-size: 14px;
         box-sizing: border-box;
-        border-top: 1px solid #D9D9D9;
+        border-top: 1px solid $input-border;
         padding: 10px 4px 4px 4px;
         display: flex;
         align-items: flex-start;
@@ -98,13 +100,13 @@
         }
     }
     &__validation-error {
-        height: '20px';
-        color: red;
+        height: 20px;
+        color: $error-text-color;
         font-size: 14px;
         padding-left: 2px;
         padding-top: 2px;
     }
     :global(.ant-checkbox-wrapper) {
-        font-family: 'Roboto';
+        font-family: $roboto;
     }
 }

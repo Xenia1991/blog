@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .article-form-container {
     width: 100%;
     height: calc(100vh - 82px);
@@ -10,7 +12,7 @@
 
 .article-form {
     width: 938px;
-    background-color: #FFFFFF;
+    background-color: $base-background;
     box-sizing: border-box;
     padding: 48px 32px;
     box-shadow: 0px 4px 12px 0px #00000026;
@@ -18,11 +20,11 @@
     display: flex;
     flex-direction: column;
     row-gap: 21px;
-    font-family: 'Roboto';
+    font-family: $roboto;
     &__header {
         font-size: 20px;
         text-align: center;
-        color: #262626;
+        color: $header-text-color;
     }
     &__article-title {
         display: flex;
@@ -44,10 +46,10 @@
         box-sizing: border-box;
         padding: 8px 12px;
         margin-top: 2px;
-        border: 1px solid #D9D9D9;
+        border: 1px solid $input-border;
         font-size: 16px;
         &::placeholder {  
-            color: #BFBFBF;
+            color: $input-placeholder;
         }
     }
     &__textarea {
@@ -57,11 +59,11 @@
         box-sizing: border-box;
         padding: 8px 12px;
         margin-top: 2px;
-        border: 1px solid #D9D9D9;
-        font-family: 'Roboto';
+        border: 1px solid $input-border;
+        font-family: $roboto;
         font-size: 16px;
         &::placeholder {  
-            color: #BFBFBF;
+            color: $input-placeholder;
         }
     }
     &__tags-area {
@@ -76,10 +78,10 @@
         box-sizing: border-box;
         padding: 8px 12px;
         margin-top: 2px;
-        border: 1px solid #D9D9D9;
+        border: 1px solid $input-border;
         font-size: 16px;
         &::placeholder {  
-            color: #BFBFBF;
+            color: $input-placeholder;
         }
     }
     &__single-tag {
@@ -92,8 +94,8 @@
         height: 40px;
         width: 320px;
         border-radius: 5px;
-        background-color: #1890FF;
-        color: #FFFFFF;
+        background-color: $button-color;
+        color: $base-background;
         font-size: 16px;
         cursor: pointer;
     }
@@ -101,9 +103,9 @@
         width: 120px;
         height: 40px;
         text-align: center;
-        color: #F5222D;
+        color: $delete-text-color;
         background-color: inherit;
-        border: 1px solid #F5222D;
+        border: 1px solid $button-delete;
         border-radius: 5px;
         box-sizing: border-box;
         font-size: 16px;
@@ -113,9 +115,9 @@
         width: 136px;
         height: 40px;
         text-align: center;
-        color: #1890FF;
+        color: $button-add;
         background-color: inherit;
-        border: 1px solid #1890FF;
+        border: 1px solid $button-add;
         border-radius: 5px;
         box-sizing: border-box;
         font-size: 16px;
@@ -123,7 +125,7 @@
     }
     &__validation-error {
         height: '20px';
-        color: red;
+        color: $error-text-color;
         font-size: 14px;
         padding-left: 2px;
         padding-top: 2px;

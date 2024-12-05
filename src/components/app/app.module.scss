@@ -1,9 +1,11 @@
+@import '../../variables.scss';
+
 .app {
     width: 1440px;
     height: auto;
     margin: 0 auto;
-    background-color: #EBEEF3;
-    font-family: 'Inter';
+    background-color: $app-background;
+    font-family: $inter;
     display: flex;
     flex-direction: column;
     align-items: center;

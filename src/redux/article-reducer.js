@@ -64,7 +64,7 @@ export const articlesReducerSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
       })
-      .addCase(fetchFavoriteThunk.pending, (state, action) => {
+      .addCase(fetchFavoriteThunk.pending, (state) => {
         state.isLoadingFavorite = true;
       })
       .addCase(fetchFavoriteThunk.fulfilled, (state, action) => {
@@ -77,10 +77,10 @@ export const articlesReducerSlice = createSlice({
         ];
         state.article = action.payload.article;
       })
-      .addCase(fetchFavoriteThunk.rejected, (state, action) => {
+      .addCase(fetchFavoriteThunk.rejected, (state) => {
         state.isErrorFavorite = true;
       })
-      .addCase(fetchUnfavoriteThunk.pending, (state, action) => {
+      .addCase(fetchUnfavoriteThunk.pending, (state) => {
         state.isLoadingFavorite = true;
       })
       .addCase(fetchUnfavoriteThunk.fulfilled, (state, action) => {
@@ -93,7 +93,7 @@ export const articlesReducerSlice = createSlice({
         ];
         state.article = action.payload.article;
       })
-      .addCase(fetchUnfavoriteThunk.rejected, (state, action) => {
+      .addCase(fetchUnfavoriteThunk.rejected, (state) => {
         state.isErrorFavorite = true;
       });
   },

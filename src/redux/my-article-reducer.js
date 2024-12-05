@@ -32,7 +32,7 @@ const createArticleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createArticleThunk.pending, (state, action) => {
+      .addCase(createArticleThunk.pending, (state) => {
         state.isCreatingLoading = true;
         state.isCreatingError = false;
         state.article = null;
@@ -42,12 +42,12 @@ const createArticleSlice = createSlice({
         state.isCreatingError = false;
         state.article = action.payload;
       })
-      .addCase(createArticleThunk.rejected, (state, action) => {
+      .addCase(createArticleThunk.rejected, (state) => {
         state.isCreatingLoading = false;
         state.isEditingError = null;
         state.isCreatingError = true;
       })
-      .addCase(editArticleThunk.pending, (state, action) => {
+      .addCase(editArticleThunk.pending, (state) => {
         state.isEditingLoading = true;
         state.article = null;
       })
@@ -56,17 +56,17 @@ const createArticleSlice = createSlice({
         state.isEditingError = false;
         state.article = action.payload;
       })
-      .addCase(editArticleThunk.rejected, (state, action) => {
+      .addCase(editArticleThunk.rejected, (state) => {
         state.isEditingError = true;
       })
-      .addCase(deleteArticleThunk.pending, (state, action) => {
+      .addCase(deleteArticleThunk.pending, (state) => {
         state.isDeleteLoading = true;
       })
-      .addCase(deleteArticleThunk.fulfilled, (state, action) => {
+      .addCase(deleteArticleThunk.fulfilled, (state) => {
         state.isDeleteLoading = false;
         state.isDeleted = true;
       })
-      .addCase(deleteArticleThunk.rejected, (state, action) => {
+      .addCase(deleteArticleThunk.rejected, (state) => {
         state.isDeleteError = true;
       });
   },
