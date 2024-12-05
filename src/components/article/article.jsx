@@ -110,6 +110,7 @@ const Article = () => {
               type="button"
               className={classes['article__likes-section']}
               onClick={article.favorited ? handleUnfavorite : handleFavorite}
+              disabled={!user}
             >
               <img src={article.favorited ? favorite : heart} className={classes['article__like']} alt="like" />
               <span className={classes['article__count']}>{article.favoritesCount}</span>
