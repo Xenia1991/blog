@@ -76,7 +76,6 @@ export const articlesReducerSlice = createSlice({
           ...state.articles.slice(index + 1),
         ];
         state.article = action.payload.article;
-        console.log(state.article);
       })
       .addCase(fetchFavoriteThunk.rejected, (state, action) => {
         state.isErrorFavorite = true;

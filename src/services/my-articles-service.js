@@ -1,16 +1,18 @@
-export const createArticle = async (articleInfo, rejected) => {
+import { apiBase } from './account-service';
+
+export const createArticle = async (info, rejected) => {
   try {
     const article = {
       article: {
-        title: articleInfo.title,
-        description: articleInfo.description,
-        body: articleInfo.body,
-        tagList: articleInfo.tagList,
+        title: info.title,
+        description: info.description,
+        body: info.body,
+        tagList: info.tagList,
       },
     };
-    const createArticleRequest = await fetch('https://blog-platform.kata.academy/api/articles', {
+    const createArticleRequest = await fetch(`${apiBase}/articles`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Token ${articleInfo.token}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Token ${info.token}` },
       body: JSON.stringify(article),
     });
     if (!createArticleRequest.ok) {
@@ -23,26 +25,26 @@ export const createArticle = async (articleInfo, rejected) => {
   }
 };
 
-export const editArticle = async (updatedArticleInfo, rejected) => {
+export const editArticle = async (info, rejected) => {
   try {
     const article = {
       article: {
-        title: updatedArticleInfo.title,
-        description: updatedArticleInfo.description,
-        body: updatedArticleInfo.body,
-        tagList: updatedArticleInfo.tagList,
+        title: info.title,
+        description: info.description,
+        body: info.body,
+        tagList: info.tagList,
       },
     };
-    const editRequest = await fetch(`https://blog-platform.kata.academy/api/articles/${updatedArticleInfo.slug}`, {
+    const editRequest = await fetch(`${apiBase}/articles/${info.slug}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', Authorization: `Token ${updatedArticleInfo.token}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Token ${info.token}` },
       body: JSON.stringify(article),
     });
     if (!editRequest.ok) {
       throw new Error('error in editArticleRequest');
     }
-    const successEdition = await editRequest.json();
-    return successEdition;
+    const successEditing = await editRequest.json();
+    return successEditing;
   } catch (error) {
     return rejected(error);
   }
@@ -50,7 +52,7 @@ export const editArticle = async (updatedArticleInfo, rejected) => {
 
 export const deleteArticle = async (info, rejected) => {
   try {
-    const deleteRequest = await fetch(`https://blog-platform.kata.academy/api/articles/${info.slug}`, {
+    const deleteRequest = await fetch(`${apiBase}/articles/${info.slug}`, {
       method: 'DELETE',
       headers: { Authorization: `Token ${info.token}` },
     });

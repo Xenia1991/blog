@@ -1,16 +1,15 @@
+import { apiBase } from './account-service';
+
 export const getArticles = async (info, rejectWithValue) => {
   try {
-    const responseArticles = await fetch(
-      `https://blog-platform.kata.academy/api/articles?offset=${info.offset}&&limit=5`,
-      {
-        method: 'GET',
-        headers: { Authorization: `Token ${info.token}` },
-      }
-    );
-    if (!responseArticles.ok) {
+    const articlesRequest = await fetch(`${apiBase}/articles?offset=${info.offset}&&limit=5`, {
+      method: 'GET',
+      headers: { Authorization: `Token ${info.token}` },
+    });
+    if (!articlesRequest.ok) {
       throw new Error('The error of response');
     }
-    const articles = await responseArticles.json();
+    const articles = await articlesRequest.json();
     return articles;
   } catch (error) {
     return rejectWithValue(error);
@@ -19,7 +18,7 @@ export const getArticles = async (info, rejectWithValue) => {
 
 export const markFavorite = async (info, rejectWithValue) => {
   try {
-    const requestFavorite = await fetch(`https://blog-platform.kata.academy/api/articles/${info.slug}/favorite`, {
+    const requestFavorite = await fetch(`${apiBase}/articles/${info.slug}/favorite`, {
       method: 'POST',
       headers: { Authorization: `Token ${info.token}` },
     });
@@ -35,7 +34,7 @@ export const markFavorite = async (info, rejectWithValue) => {
 
 export const markUnfavorite = async (info, rejectWithValue) => {
   try {
-    const requestUnfavorite = await fetch(`https://blog-platform.kata.academy/api/articles/${info.slug}/favorite`, {
+    const requestUnfavorite = await fetch(`${apiBase}/articles/${info.slug}/favorite`, {
       method: 'DELETE',
       headers: { Authorization: `Token ${info.token}` },
     });

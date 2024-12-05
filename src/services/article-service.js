@@ -1,13 +1,15 @@
+import { apiBase } from './account-service';
+
 const getSingleArticle = async (info, rejectedWithValue) => {
   try {
-    const articleResponse = await fetch(`https://blog-platform.kata.academy/api/articles/${info.slug}`, {
+    const articleRequest = await fetch(`${apiBase}/articles/${info.slug}`, {
       method: 'GET',
       headers: { Authorization: `Token ${info.token}` },
     });
-    if (!articleResponse.ok) {
+    if (!articleRequest.ok) {
       throw new Error('ошибка запроса статьи');
     }
-    const article = await articleResponse.json();
+    const article = await articleRequest.json();
     return article;
   } catch (error) {
     if (error.status === 404) {
