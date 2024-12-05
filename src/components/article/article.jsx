@@ -22,12 +22,13 @@ import heart from '../../assets/images/heart.png';
 import classes from './article.module.scss';
 
 const Article = () => {
-  const article = useSelector((state) => state.articles.article);
   const user = useSelector((state) => state.account.user);
+  const article = useSelector((state) => state.articles.article);
   const isLoading = useSelector((state) => state.articles.isLoading);
   const isError = useSelector((state) => state.articles.isError);
-  const dispatch = useDispatch();
   const page = useSelector((state) => state.articles.page);
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
   const token = useMemo(() => {
     let userToken;
     if (user) {
@@ -40,14 +41,16 @@ const Article = () => {
   const { slug } = useParams();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const navigation = useNavigate();
+
+  const { Text } = Typography;
+  const info = {
+    token,
+    slug: slug || article.slug,
+    offset: page === 0 ? 0 : (page - 1) * 5,
+  };
+  let tags;
 
   useEffect(() => {
-    const info = {
-      token,
-      slug: slug || article.slug,
-      offset: page === 0 ? 0 : (page - 1) * 5,
-    };
     dispatch(fetchArticlesThunk(info));
     dispatch(fetchArticleThunk(info));
   }, []);
@@ -57,10 +60,6 @@ const Article = () => {
   };
 
   const handleOk = () => {
-    const info = {
-      token,
-      slug,
-    };
     setConfirmLoading(true);
     dispatch(deleteArticleThunk(info));
     setTimeout(() => {
@@ -74,32 +73,18 @@ const Article = () => {
     setOpen(false);
   };
 
-  if (!article || isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <Error />;
-  }
-
   const handleFavorite = () => {
-    const info = {
-      token,
-      slug,
-    };
     dispatch(fetchFavoriteThunk(info));
   };
 
   const handleUnfavorite = () => {
-    const info = {
-      token,
-      slug,
-    };
     dispatch(fetchUnfavoriteThunk(info));
   };
 
-  const { Text } = Typography;
-  let tags;
+  if (!article || isLoading) {
+    return <Loader />;
+  }
+
   if (article.tagList) {
     tags = article.tagList.map((tag) => (
       <Text code key={nanoid()}>
@@ -110,6 +95,9 @@ const Article = () => {
     tags = [];
   }
 
+  if (isError) {
+    return <Error />;
+  }
   const creationDate = format(new Date(article.createdAt), 'MMMM dd, yyyy');
 
   return (

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Typography } from 'antd';
 import { nanoid } from 'nanoid';
 import { format } from 'date-fns';
@@ -13,13 +14,22 @@ import classes from './article-preview.module.scss';
 
 const ArticlePreview = ({ article }) => {
   const user = useSelector((state) => state.account.user);
-  const { slug } = article;
-  let token;
   const dispatch = useDispatch();
-
-  if (user) {
-    token = user.token;
-  }
+  const token = useMemo(() => {
+    let userToken;
+    if (user) {
+      userToken = user.token;
+    } else {
+      userToken = JSON.parse(localStorage.getItem('token'));
+    }
+    return userToken;
+  }, [user]);
+  const { slug } = article;
+  const info = {
+    token,
+    slug,
+  };
+  const { Text } = Typography;
 
   const cutTitle = (title) => {
     if (title.length > 40) {
@@ -38,30 +48,16 @@ const ArticlePreview = ({ article }) => {
   };
 
   const handleClick = () => {
-    const info = {
-      token,
-      slug,
-    };
     dispatch(fetchArticleThunk(info));
   };
 
   const handleFavorite = () => {
-    const info = {
-      token,
-      slug,
-    };
     dispatch(fetchFavoriteThunk(info));
   };
 
   const handleUnfavorite = () => {
-    const info = {
-      token,
-      slug,
-    };
     dispatch(fetchUnfavoriteThunk(info));
   };
-
-  const { Text } = Typography;
 
   let tags;
   if (article.tagList) {

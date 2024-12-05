@@ -4,7 +4,6 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import { createArticleThunk, editArticleThunk } from '../../redux/my-article-reducer';
 import Loader from '../loader';
@@ -18,7 +17,6 @@ const ArticleForm = () => {
   const createdArticle = useSelector((state) => state.myArticle.article);
   const editedArticle = useSelector((state) => state.articles.article);
   const { slug } = useParams();
-  console.log(editedArticle);
   const navigation = useNavigate();
   let userToken;
   let defaultTags;
@@ -90,7 +88,7 @@ const ArticleForm = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log(createdArticle);
+
   return (
     <div className={classes['article-form-container']}>
       <form
