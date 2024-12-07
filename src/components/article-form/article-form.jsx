@@ -175,12 +175,17 @@ const ArticleForm = () => {
               <li key={item.id} className={classes['article-form__single-tag']}>
                 <Controller
                   render={({ field }) => (
-                    <input
-                      {...register(`tagList.${index}.name`)}
-                      className={classes['article-form__tag-input']}
-                      {...field}
-                      defaultValue={editedArticle ? field.name : null}
-                    />
+                    <div>
+                      <input
+                        {...register(`tagList.${index}.name`)}
+                        className={classes['article-form__tag-input']}
+                        {...field}
+                        defaultValue={editedArticle ? field.name : null}
+                      />
+                      <div className={classes['article-form__validation-error']}>
+                        {errors?.tagList?.[index]?.name?.message}
+                      </div>
+                    </div>
                   )}
                   name={`tagList.${index}.name`}
                   control={control}
