@@ -37,7 +37,7 @@ const ArticleForm = () => {
     control,
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onBlur',
+    mode: 'all',
     defaultValues: {
       tagList: editedArticle?.author?.username === user?.username ? defaultTags : [{ name: '' }],
     },
@@ -61,7 +61,9 @@ const ArticleForm = () => {
   const handleCreate = (evt) => {
     const tagsList = [];
     evt.tagList.forEach((tag) => {
-      tagsList.push(tag.name);
+      if (tag.name !== '') {
+        tagsList.push(tag.name);
+      }
     });
     const article = {
       title: evt.title,
@@ -78,7 +80,9 @@ const ArticleForm = () => {
   const handleEdit = (evt) => {
     const tagsList = [];
     evt.tagList.forEach((tag) => {
-      tagsList.push(tag.name);
+      if (tag.name !== '') {
+        tagsList.push(tag.name);
+      }
     });
     const articleInfo = {
       title: evt.title,
@@ -96,7 +100,7 @@ const ArticleForm = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log(editedArticle, user);
+
   return (
     <div className={classes['article-form-container']}>
       <form
