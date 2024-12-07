@@ -4,6 +4,7 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { createArticleThunk, editArticleThunk } from '../../redux/my-article-reducer';
 import Loader from '../loader';
@@ -49,6 +50,12 @@ const ArticleForm = () => {
     control,
     name: 'tagList',
   });
+
+  useEffect(() => {
+    if (!userToken) {
+      navigation('/sign-in');
+    }
+  }, [userToken, navigation]);
 
   const handleCreate = (evt) => {
     const tagsList = [];
