@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { fetchArticlesThunk } from '../../redux/article-reducer';
 import { accountReducerSlice } from '../../redux/account-reducer';
+import { createArticleSlice } from '../../redux/my-article-reducer';
 import avatar from '../../assets/images/avatar.png';
 
 import classes from './navigation-panel.module.scss';
@@ -39,6 +40,10 @@ const NavigationPanel = () => {
     navigation('/articles');
   };
 
+  const handleCreate = () => {
+    dispatch(createArticleSlice.actions.create());
+  };
+
   const handleClick = () => {
     dispatch(fetchArticlesThunk(info));
   };
@@ -56,7 +61,7 @@ const NavigationPanel = () => {
 
       {user ? (
         <div className={classes.navigation__section}>
-          <Link to="/new-article" className={createArticle}>
+          <Link to="/new-article" className={createArticle} onClick={handleCreate}>
             Create article
           </Link>
           <Link to="/profile" className={profile}>

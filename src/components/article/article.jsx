@@ -12,7 +12,7 @@ import {
   fetchFavoriteThunk,
   fetchUnfavoriteThunk,
 } from '../../redux/article-reducer';
-import { deleteArticleThunk } from '../../redux/my-article-reducer';
+import { deleteArticleThunk, createArticleSlice } from '../../redux/my-article-reducer';
 import Loader from '../loader';
 import Error from '../error/error';
 import avatar from '../../assets/images/avatar.png';
@@ -77,6 +77,10 @@ const Article = () => {
 
   const handleUnfavorite = () => {
     dispatch(fetchUnfavoriteThunk(info));
+  };
+
+  const handleEdit = () => {
+    dispatch(createArticleSlice.actions.edit());
   };
 
   const defineFavorite = () => {
@@ -160,7 +164,12 @@ const Article = () => {
                   Delete
                 </button>
               </Popconfirm>
-              <Link to={`/articles/${slug}/edit`} type="button" className={classes['article__edit-button']}>
+              <Link
+                to={`/articles/${slug}/edit`}
+                type="button"
+                className={classes['article__edit-button']}
+                onClick={handleEdit}
+              >
                 Edit
               </Link>
             </div>

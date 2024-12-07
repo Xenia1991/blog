@@ -18,13 +18,15 @@ const ArticleForm = () => {
   const createdArticle = useSelector((state) => state.myArticle.article);
   const editedArticle = useSelector((state) => state.articles.article);
   const user = useSelector((state) => state.account.user);
+  const createMode = useSelector((state) => state.myArticle.isCreating);
+  const editMode = useSelector((state) => state.myArticle.isEditing);
   const { slug } = useParams();
   const navigation = useNavigate();
   let userToken;
   let defaultTags;
 
   if (editedArticle || editedArticle?.author?.username === user?.username) {
-    defaultTags = editedArticle.tagList.map((tag) => {
+    defaultTags = editedArticle?.tagList?.map((tag) => {
       return { name: tag };
     });
   }
@@ -39,7 +41,7 @@ const ArticleForm = () => {
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      tagList: editedArticle?.author?.username === user?.username ? defaultTags : [{ name: '' }],
+      tagList: editedArticle?.author?.username === user?.username && editMode ? defaultTags : [{ name: '' }],
     },
   });
 
@@ -106,11 +108,13 @@ const ArticleForm = () => {
       <form
         className={classes['article-form']}
         onSubmit={
-          editedArticle?.author?.username === user?.username ? handleSubmit(handleEdit) : handleSubmit(handleCreate)
+          editedArticle?.author?.username === user?.username && editMode
+            ? handleSubmit(handleEdit)
+            : handleSubmit(handleCreate)
         }
       >
         <h5 className={classes['article-form__header']}>
-          {editedArticle?.author?.username === user?.username ? 'Edit article' : 'Create new article'}
+          {editedArticle?.author?.username === user?.username && editMode ? 'Edit article' : 'Create new article'}
         </h5>
         <label className={classes['article-from__article-title']}>
           <p className={classes['article-form__title']}>Title</p>
@@ -118,7 +122,9 @@ const ArticleForm = () => {
             <input
               {...register('title')}
               className={classes['article-form__input']}
-              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.title : null}
+              defaultValue={
+                editedArticle?.author?.username === user?.username && editMode ? editedArticle?.title : null
+              }
               placeholder={editedArticle?.author?.username !== user?.username ? 'Title' : null}
               type="text"
             />
@@ -133,7 +139,9 @@ const ArticleForm = () => {
             <input
               {...register('description')}
               className={classes['article-form__input']}
-              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.description : null}
+              defaultValue={
+                editedArticle?.author?.username === user?.username && editMode ? editedArticle?.description : null
+              }
               placeholder={editedArticle?.author?.username !== user?.username ? 'Sort description' : null}
               type="text"
             />
@@ -153,7 +161,7 @@ const ArticleForm = () => {
             <textarea
               {...register('text')}
               className={classes['article-form__textarea']}
-              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.body : null}
+              defaultValue={editedArticle?.author?.username === user?.username && editMode ? editedArticle?.body : null}
               placeholder={editedArticle?.author?.username !== user?.username ? 'Text' : null}
               type="text"
             />

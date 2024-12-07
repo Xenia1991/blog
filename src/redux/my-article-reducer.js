@@ -17,10 +17,12 @@ export const deleteArticleThunk = createAsyncThunk('myArticleDelete/deleteFetch'
   return deleteArticle(info, rejectWithValue);
 });
 
-const createArticleSlice = createSlice({
+export const createArticleSlice = createSlice({
   name: 'myArticle',
   initialState: {
     article: null,
+    isCreating: null,
+    isEditing: null,
     isCreatingLoading: null,
     isCreatingError: null,
     isEditingLoading: null,
@@ -29,7 +31,16 @@ const createArticleSlice = createSlice({
     isDeleted: null,
     isDeleteError: null,
   },
-  reducers: {},
+  reducers: {
+    create: (state) => {
+      state.isCreating = true;
+      state.isEditing = false;
+    },
+    edit: (state) => {
+      state.isCreating = false;
+      state.isEditing = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createArticleThunk.pending, (state) => {
