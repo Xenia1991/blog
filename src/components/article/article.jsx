@@ -16,8 +16,6 @@ import { deleteArticleThunk } from '../../redux/my-article-reducer';
 import Loader from '../loader';
 import Error from '../error/error';
 import avatar from '../../assets/images/avatar.png';
-import favorite from '../../assets/images/favourite.png';
-import heart from '../../assets/images/heart.png';
 
 import classes from './article.module.scss';
 

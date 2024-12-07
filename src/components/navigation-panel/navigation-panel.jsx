@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 import classNames from 'classnames';
 
 import { fetchArticlesThunk } from '../../redux/article-reducer';
@@ -19,6 +20,19 @@ const NavigationPanel = () => {
   const createArticle = classNames(classes.navigation__button, classes['navigation__button-create-article']);
   const profile = classNames(classes.navigation__button, classes['navigation__button-profile']);
   const logOutButton = classNames(classes.navigation__button, classes['navigation__button-log-out']);
+  const token = useMemo(() => {
+    let userToken;
+    if (user) {
+      userToken = user.token;
+    } else {
+      userToken = JSON.parse(localStorage.getItem('token'));
+    }
+    return userToken;
+  }, [user]);
+  const info = {
+    token,
+    offset: page === 0 ? 0 : (page - 1) * 5,
+  };
 
   const handleLogoutClick = () => {
     dispatch(accountReducerSlice.actions.logOut());
@@ -26,7 +40,7 @@ const NavigationPanel = () => {
   };
 
   const handleClick = () => {
-    dispatch(fetchArticlesThunk((page - 1) * 5));
+    dispatch(fetchArticlesThunk(info));
   };
 
   if (!user && localStorage.getItem('token') !== null) {

@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchArticleThunk, fetchFavoriteThunk, fetchUnfavoriteThunk } from '../../redux/article-reducer';
 import avatar from '../../assets/images/avatar.png';
-import heart from '../../assets/images/heart.png';
-import favorite from '../../assets/images/favourite.png';
 
 import classes from './article-preview.module.scss';
 

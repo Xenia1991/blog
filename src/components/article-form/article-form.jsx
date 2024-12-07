@@ -17,12 +17,13 @@ const ArticleForm = () => {
   const isLoading = useSelector((state) => state.myArticle.isCreatingLoading);
   const createdArticle = useSelector((state) => state.myArticle.article);
   const editedArticle = useSelector((state) => state.articles.article);
+  const user = useSelector((state) => state.account.user);
   const { slug } = useParams();
   const navigation = useNavigate();
   let userToken;
   let defaultTags;
 
-  if (editedArticle) {
+  if (editedArticle || editedArticle?.author?.username === user?.username) {
     defaultTags = editedArticle.tagList.map((tag) => {
       return { name: tag };
     });
@@ -38,7 +39,7 @@ const ArticleForm = () => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues: {
-      tagList: editedArticle ? defaultTags : [{ name: '' }],
+      tagList: editedArticle?.author?.username === user?.username ? defaultTags : [{ name: '' }],
     },
   });
 
@@ -95,21 +96,26 @@ const ArticleForm = () => {
   if (isLoading) {
     return <Loader />;
   }
-
+  console.log(editedArticle, user);
   return (
     <div className={classes['article-form-container']}>
       <form
         className={classes['article-form']}
-        onSubmit={editedArticle ? handleSubmit(handleEdit) : handleSubmit(handleCreate)}
+        onSubmit={
+          editedArticle?.author?.username === user?.username ? handleSubmit(handleEdit) : handleSubmit(handleCreate)
+        }
       >
-        <h5 className={classes['article-form__header']}>{editedArticle ? 'Edit article' : 'Create new article'}</h5>
+        <h5 className={classes['article-form__header']}>
+          {editedArticle?.author?.username === user?.username ? 'Edit article' : 'Create new article'}
+        </h5>
         <label className={classes['article-from__article-title']}>
           <p className={classes['article-form__title']}>Title</p>
           {editedArticle ? (
             <input
               {...register('title')}
               className={classes['article-form__input']}
-              defaultValue={editedArticle?.title}
+              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.title : null}
+              placeholder={editedArticle?.author?.username !== user?.username ? 'Title' : null}
               type="text"
             />
           ) : (
@@ -123,7 +129,8 @@ const ArticleForm = () => {
             <input
               {...register('description')}
               className={classes['article-form__input']}
-              defaultValue={editedArticle?.description}
+              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.description : null}
+              placeholder={editedArticle?.author?.username !== user?.username ? 'Sort description' : null}
               type="text"
             />
           ) : (
@@ -142,7 +149,8 @@ const ArticleForm = () => {
             <textarea
               {...register('text')}
               className={classes['article-form__textarea']}
-              defaultValue={editedArticle?.body}
+              defaultValue={editedArticle?.author?.username === user?.username ? editedArticle?.body : null}
+              placeholder={editedArticle?.author?.username !== user?.username ? 'Text' : null}
               type="text"
             />
           ) : (
