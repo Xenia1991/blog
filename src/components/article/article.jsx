@@ -81,6 +81,18 @@ const Article = () => {
     dispatch(fetchUnfavoriteThunk(info));
   };
 
+  const defineFavorite = () => {
+    let buttonClass;
+    if (user && article.favorited) {
+      buttonClass = classes['article__likes-section-favorite'];
+    } else if (user && !article.favorited) {
+      buttonClass = classes['article__likes-section-unfavorite'];
+    } else {
+      buttonClass = classes['article__likes-section-unfavorite'];
+    }
+    return buttonClass;
+  };
+
   if (!article || isLoading) {
     return <Loader />;
   }
@@ -99,7 +111,7 @@ const Article = () => {
     return <Error />;
   }
   const creationDate = format(new Date(article.createdAt), 'MMMM dd, yyyy');
-
+  const buttonFavorite = defineFavorite();
   return (
     <section className={classes['article-section']}>
       <div className={classes['article']}>
@@ -108,12 +120,11 @@ const Article = () => {
             <h5 className={classes['article__title']}>{article.title}</h5>
             <button
               type="button"
-              className={classes['article__likes-section']}
+              className={buttonFavorite}
               onClick={article.favorited ? handleUnfavorite : handleFavorite}
               disabled={!user}
             >
-              <img src={article.favorited ? favorite : heart} className={classes['article__like']} alt="like" />
-              <span className={classes['article__count']}>{article.favoritesCount}</span>
+              {article.favoritesCount}
             </button>
           </div>
           <div className={classes['article__tags-section']}>{tags}</div>

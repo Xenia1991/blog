@@ -34,22 +34,25 @@
         color: $article-title-color;
         text-decoration: none;
     }
-    &__likes-section {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+    &__likes-section-unfavorite {
         border: none;
         background-color: inherit;
-        cursor: pointer;
-    }
-    &__like {
-        display: block;
-        width: 16px;
-        height: 16px;
-    }
-    &__count {
+        width: 38px;
         font-size: 12px;
-        display: block;
+        text-align: end;
+        cursor: pointer;
+        background-image: url('../../assets/images/heart.png');
+        background-repeat: no-repeat;
+    }
+    &__likes-section-favorite {
+        border: none;
+        background-color: inherit;
+        width: 38px;
+        font-size: 12px;
+        text-align: end;
+        cursor: pointer;
+        background-image: url('../../assets/images/favourite.png');
+        background-repeat: no-repeat;
     }
     &__tags-section {
         font-family: $inter;

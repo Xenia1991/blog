@@ -75,6 +75,19 @@ const ArticlePreview = ({ article }) => {
   const title = cutTitle(article.title);
   const description = cuttedDescription(article.description);
 
+  const defineFavorite = () => {
+    let buttonClass;
+    if (user && article.favorited) {
+      buttonClass = classes['article-preview__likes-section-favorite'];
+    } else if (user && !article.favorited) {
+      buttonClass = classes['article-preview__likes-section-unfavorite'];
+    } else {
+      buttonClass = classes['article-preview__likes-section-unfavorite'];
+    }
+    return buttonClass;
+  };
+
+  const buttonFavorite = defineFavorite();
   return (
     <li className={classes['article-preview']}>
       <section className={classes['article-preview__text-section']}>
@@ -84,12 +97,11 @@ const ArticlePreview = ({ article }) => {
           </Link>
           <button
             type="button"
-            className={classes['article-preview__likes-section']}
             onClick={article.favorited ? handleUnfavorite : handleFavorite}
+            className={buttonFavorite}
             disabled={!user}
           >
-            <img src={article.favorited ? favorite : heart} className={classes['article-preview__like']} alt="like" />
-            <span className={classes['article-preview__count']}>{article.favoritesCount}</span>
+            {article.favoritesCount}
           </button>
         </div>
         <div className={classes['article-preview__tags-section']}>{tags}</div>
